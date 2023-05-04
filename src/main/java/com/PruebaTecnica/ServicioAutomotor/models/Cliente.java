@@ -6,6 +6,8 @@ import java.util.Set;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -37,6 +39,7 @@ public class Cliente {
 	private int cantServicios;
 
 	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER, mappedBy="cliente")
+	@JsonIgnore
 	private Set<Vehiculo> vehiculos;
 	
 	

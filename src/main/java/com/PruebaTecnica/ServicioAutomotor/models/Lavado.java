@@ -29,8 +29,6 @@ public class Lavado  extends Servicio{
 	}//CONSTRUCTOR VACIO
 
 	
-	
-	
 	public Lavado(TipoServicio tipoServicio, double precio) {
 		super(precio);
 		this.tipoServicio = tipoServicio;
