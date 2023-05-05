@@ -3,7 +3,6 @@ package com.PruebaTecnica.ServicioAutomotor.models;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,8 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -33,11 +33,12 @@ public class OrdenDeTrabajo {
 	@Column(name="total",  nullable = false)
 	private double total;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_vehiculo",nullable=false)
 	private Vehiculo vehiculo;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER, mappedBy="ordenDeTrabajo")
+	@ManyToMany
+	@JoinTable(name = "servicio_orden_trabajo",joinColumns = @JoinColumn(name="id_orden_de_trabajo"), inverseJoinColumns = @JoinColumn(name="id_servicio") )
 	private Set<Servicio> servicios;
 	
 	
@@ -95,14 +96,6 @@ public class OrdenDeTrabajo {
 		this.vehiculo = vehiculo;
 	}
 
-	public Set<Servicio> getServicios() {
-		return servicios;
-	}
-
-	public void setServicios(Set<Servicio> servicios) {
-		this.servicios = servicios;
-	}
-
 	public LocalDateTime getCreatedat() {
 		return createdat;
 	}
@@ -117,6 +110,13 @@ public class OrdenDeTrabajo {
 
 	public void setUpdatedat(LocalDateTime updatedat) {
 		this.updatedat = updatedat;
+	}
+
+	public Set<Servicio> getServicios() {
+		return servicios;
+	}
+	public void setServicios(Set<Servicio> servicios) {
+		this.servicios = servicios;
 	}
 
 

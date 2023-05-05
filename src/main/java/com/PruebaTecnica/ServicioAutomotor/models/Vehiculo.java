@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,11 +29,14 @@ public class Vehiculo {
 	@Column(name="patente", nullable=false, length=7) //FORMATO 'AAA111' 6 CARACTERES O FORMATO 'AA111AA' 7 CARACTERES
 	private String patente;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_cliente",nullable=false)
 	private Cliente cliente;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@Column(name="modelo", nullable=false, length=45) 
+	private String modelo;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_marca",nullable=false)
 	private Marca marca;
 	
@@ -48,11 +54,12 @@ public class Vehiculo {
 	} //CONSTRUCTOR VACIO
 
 	
-	public Vehiculo(String patente, Cliente cliente, Marca marca) {
+	public Vehiculo(String patente, Cliente cliente, Marca marca, String modelo) {
 		super();
 		this.patente = patente;
 		this.cliente = cliente;
 		this.marca = marca;
+		this.modelo = modelo;
 	}//CONSTRUCTOR
 
 	public int getIdVehiculo() {
@@ -88,6 +95,15 @@ public class Vehiculo {
 		this.marca = marca;
 	}
 
+	
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+	
 
 	public LocalDateTime getCreatedat() {
 		return createdat;
@@ -105,10 +121,11 @@ public class Vehiculo {
 		this.updatedat = updatedat;
 	}
 	
+
 	@Override
 	public String toString() {
 		return "Vehiculo [idVehiculo=" + idVehiculo + ", patente=" + patente + ", cliente=" + cliente + ", marca="
-				+ marca + ", createdat=" + createdat + ", updatedat=" + updatedat + "]";
+				+ marca + ", modelo=" + modelo +  ", createdat=" + createdat + ", updatedat=" + updatedat + "]";
 	}
 
 		

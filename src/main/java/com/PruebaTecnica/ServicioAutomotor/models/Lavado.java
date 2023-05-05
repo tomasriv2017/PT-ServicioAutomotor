@@ -8,7 +8,6 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 
-
 @Entity
 @Table(name="lavado")
 @PrimaryKeyJoinColumn(name = "id_lavado")

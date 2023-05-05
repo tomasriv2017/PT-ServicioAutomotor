@@ -7,10 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.PruebaTecnica.ServicioAutomotor.models.Cliente;
+import com.PruebaTecnica.ServicioAutomotor.models.Marca;
 
-@Repository("clienteRepository")
-public interface IClienteRepository  extends JpaRepository<Cliente, Serializable> {
+@Repository("marcaRepository")
+public interface IMarcaRepository  extends JpaRepository<Marca, Serializable> {
 	
-	public Optional<Cliente> findClienteByDni(@Param("dni") long dni);
+	public Optional<Marca> findMarcaByMarca(@Param("marca") String marca); //Marca seria el nombre de la misma
+
 }

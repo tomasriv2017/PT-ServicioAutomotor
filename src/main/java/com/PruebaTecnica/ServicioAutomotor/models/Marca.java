@@ -6,6 +6,8 @@ import java.util.Set;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +29,8 @@ public class Marca {
 	@Column(name="marca", nullable=false, length=45)
 	private String marca;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER, mappedBy="marca")
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, mappedBy="marca")
+	@JsonIgnore
 	private Set<Vehiculo> vehiculos;
 	
 	@Column(name="createdat", nullable= false)
@@ -46,7 +49,7 @@ public class Marca {
 	public Marca(String marca, Set<Vehiculo> vehiculos) {
 		super();
 		this.marca = marca;
-		this.vehiculos = vehiculos;
+//		this.vehiculos = vehiculos;
 	}//CONSTRUCTOR
 
 

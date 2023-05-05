@@ -38,7 +38,7 @@ public class Cliente {
 	@Column(name = "cant_servicios", columnDefinition = "int default 0")
 	private int cantServicios;
 
-	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.EAGER, mappedBy="cliente")
+	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, mappedBy="cliente")
 	@JsonIgnore
 	private Set<Vehiculo> vehiculos;
 	
@@ -57,12 +57,12 @@ public class Cliente {
 	} //CONSTRUCTOR VACIO
 
 
-	public Cliente(long dni, String nombre, String apellido, Set<Vehiculo> vehiculos) {
+	public Cliente(long dni, String nombre, String apellido) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
-		this.vehiculos = vehiculos;
+//		this.vehiculos = vehiculos;
 	}//CONSTRUCTOR
 
 
@@ -109,12 +109,12 @@ public class Cliente {
 		this.updatedat = updatedat;
 	}
 
-	public Set<Vehiculo> getVehiculos() {
-		return vehiculos;
-	}
-	public void setVehiculos(Set<Vehiculo> vehiculos) {
-		this.vehiculos = vehiculos;
-	}
+//	public Set<Vehiculo> getVehiculos() {
+//		return vehiculos;
+//	}
+//	public void setVehiculos(Set<Vehiculo> vehiculos) {
+//		this.vehiculos = vehiculos;
+//	}
 
 
 	@Override
