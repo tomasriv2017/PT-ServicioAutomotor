@@ -1,6 +1,7 @@
 package com.PruebaTecnica.ServicioAutomotor.repositories;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,8 +17,9 @@ public interface IVehiculoRepository extends JpaRepository<Vehiculo, Serializabl
 	
 	public Optional<Vehiculo> findVehiculoByPatente(@Param("patente") String patente);
 
-	public Optional<Vehiculo> findVehiculoByMarca(@Param("marca") Marca marca);
+	public List<Vehiculo> findAllByMarca(@Param("marca") Marca marca);
 
-	public Optional<Vehiculo> findVehiculoByCliente(@Param("cliente") Cliente cliente);
+	public List<Vehiculo> findAllByCliente(@Param("cliente") Cliente cliente);
+	
 
 }

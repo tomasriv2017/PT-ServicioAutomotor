@@ -12,8 +12,8 @@ public interface IVehiculoService {
 	public List<Vehiculo> listar();
 	public Optional<Vehiculo>traerById(int id);
 	public Optional<Vehiculo>traerVehiculoByPatente(String patente);
-	public Optional<Vehiculo>traerVheiculoByMarca(Marca marca);
-	public Optional<Vehiculo>traerVheiculoByCliente(Cliente cliente);
+	public List<Vehiculo>traerVehiculosByMarca(Marca marca);
+	public List<Vehiculo>traerVehiculosByCliente(Cliente cliente);
 	public Vehiculo saveOrUpdate(Vehiculo vehiculo);
 	public void delete(int idVehiculo);
 	

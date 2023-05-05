@@ -32,9 +32,8 @@ public class OrdenDeTrabajoController {
     
     }
 		
-	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> actualizarOrden(@RequestBody OrdenDeTrabajo ordenModificado, @PathVariable(name = "id") int id){
+	public ResponseEntity<?> actualizarOrdenDeTrabajo(@RequestBody OrdenDeTrabajo ordenModificado, @PathVariable(name = "id") int id){
 		if(!ordenDeTrabajoService.traerById(id).isPresent()) {
 			return new ResponseEntity<String>("La orden a modificar no existe", HttpStatus.BAD_REQUEST);
 		}else {
@@ -45,7 +44,7 @@ public class OrdenDeTrabajoController {
 	
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> eliminarOrden(@PathVariable("id")int id) throws Exception{
+	public ResponseEntity<?> eliminarOrdenDeTrabajo(@PathVariable("id")int id) throws Exception{
 		Optional<OrdenDeTrabajo> ordenBuscada = ordenDeTrabajoService.traerById(id);
 		if(!ordenBuscada.isPresent()) {
 			return new ResponseEntity<String>("La orden a eliminar no existe", HttpStatus.NOT_FOUND);
@@ -56,32 +55,24 @@ public class OrdenDeTrabajoController {
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<?> listarOrdenes() {
+	public ResponseEntity<?> listar() {
 		  return new ResponseEntity<List<OrdenDeTrabajo>>(ordenDeTrabajoService.listar(),  HttpStatus.OK);
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> traerOrdenDeTrabajoById(@PathVariable(name="id") int id){		
+		Optional<OrdenDeTrabajo> ordenDeTrabajoBuscada = ordenDeTrabajoService.traerById(id);
+		if(!ordenDeTrabajoBuscada.isPresent()) {
+			return new ResponseEntity<String>("La orden de trabajo buscada no existe", HttpStatus.NOT_FOUND);
+		} else return new ResponseEntity<OrdenDeTrabajo>(ordenDeTrabajoBuscada.get(), HttpStatus.FOUND);
+	}
 	
 	
+	@GetMapping("/client/{idCliente}")
+	public ResponseEntity<?> listarByIdCliente( @PathVariable("idCliente") int idCliente){
+		return new ResponseEntity<List<OrdenDeTrabajo>>(ordenDeTrabajoService.listarByCliente(idCliente), HttpStatus.FOUND);
+	}
 	
-	
-//	
-//	private void cast(OrdenDeTrabajo ordenDeTrabajo) {
-//		Set<Servicio> listAux = new HashSet<>();
-//		
-//		for (Servicio servicio : ordenDeTrabajo.getServicios()) {
-//			if(servicio instanceof Lavado) {
-//				System.out.println("ACA ENTRO");
-//				listAux.add( ((Lavado)servicio) );
-//			}
-////			if(servicio instanceof AceiteYFiltro) {
-////				listAux.add( ((AceiteYFiltro)servicio) );
-////			}
-////			if( servicio instanceof AlineacionYBalanceo) {
-////				listAux.add( ((AlineacionYBalanceo)servicio) );
-////			}
-//		}
-//		
-//		ordenDeTrabajo.setServicios(listAux);
-//	}
+
 	
 }

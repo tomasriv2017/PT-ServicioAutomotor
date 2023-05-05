@@ -96,35 +96,26 @@ public class VehiculoController {
 	
 	@GetMapping("/client/{idCliente}")
 	public ResponseEntity<?> traerVehiculoByCliente(@PathVariable(name="idCliente") int idCliente){		
-		boolean notExists = false;
-		Optional<Cliente> clienteDelVehiculo = clienteService.traerById(idCliente);
+		Optional<Cliente> cliente = clienteService.traerById(idCliente);
 				
-		if (!clienteDelVehiculo.isPresent())  {
+		if (!cliente.isPresent())  {
 			return new ResponseEntity<String>("El cliente solicitado no existe", HttpStatus.NOT_FOUND);
 		} 
-		else {
-			Optional<Vehiculo> vehiculoBuscado = vehiculoService.traerVheiculoByCliente( clienteDelVehiculo.get() );
-			if (!vehiculoBuscado.isPresent()) {
-				return new ResponseEntity<String>("El cliente solicitado no dispone de un vehiculo", HttpStatus.NOT_FOUND);
-			}else return new ResponseEntity<Vehiculo>(vehiculoBuscado.get(), HttpStatus.FOUND);
-		}
+		else return new ResponseEntity<List<Vehiculo>>( vehiculoService.traerVehiculosByCliente(cliente.get()), HttpStatus.FOUND);
+		
 	}
 	
 	
 	@GetMapping("/marca/{idMarca}")
 	public ResponseEntity<?> traerVehiculoByMarca(@PathVariable(name="idMarca") int idMarca){		
 		boolean notExists = false;
-		Optional<Marca> marcaDelVehiculo = marcaService.traerById(idMarca);
+		Optional<Marca> marca = marcaService.traerById(idMarca);
 				
-		if (!marcaDelVehiculo.isPresent())  {
+		if (!marca.isPresent())  {
 			return new ResponseEntity<String>("La marca solicitada no existe", HttpStatus.NOT_FOUND);
 		} 
-		else {
-			Optional<Vehiculo> vehiculoBuscado = vehiculoService.traerVheiculoByMarca( marcaDelVehiculo.get() );
-			if (!vehiculoBuscado.isPresent()) {
-				return new ResponseEntity<String>("La marca solicitada no dispone de un vehiculo", HttpStatus.NOT_FOUND);
-			}else return new ResponseEntity<Vehiculo>(vehiculoBuscado.get(), HttpStatus.FOUND);
-		}
+		else return new ResponseEntity<List<Vehiculo>>( vehiculoService.traerVehiculosByMarca(marca.get()) , HttpStatus.FOUND);
+		
 	}
 	
 	 
