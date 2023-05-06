@@ -1,5 +1,6 @@
 package com.PruebaTecnica.ServicioAutomotor.serviceImp;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -66,8 +67,8 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	
 	
 	
-	private Set<Servicio> getServicios(OrdenDeTrabajo ordenDeTrabajo) {
-        Set<Servicio> listAux = new HashSet<>();
+	private List<Servicio> getServicios(OrdenDeTrabajo ordenDeTrabajo) {
+        List<Servicio> listAux = new ArrayList<>();
 		if(!ordenDeTrabajo.getServicios().isEmpty()) {
     		for (Servicio servicio : ordenDeTrabajo.getServicios()) {
     			listAux.add(servicioRepository.findById(servicio.getIdServicio()).get());
@@ -78,9 +79,14 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	
 	private void map(OrdenDeTrabajo modificado, OrdenDeTrabajo preModificado ){
 		
-        if( modificado.getFechaYHora() != null) {
-            preModificado.setFechaYHora(modificado.getFechaYHora());
+        if( modificado.getFecha() != null) {
+            preModificado.setFecha(modificado.getFecha());
         }
+        
+        if( modificado.getHora() != null) {
+            preModificado.setHora(modificado.getHora());
+        }
+        
         
         if( modificado.getVehiculo() != null) {
             preModificado.setVehiculo( modificado.getVehiculo());
@@ -92,7 +98,7 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
         }
 	}
 	
-	private double calcularTotal (Set<Servicio> servicios) {
+	private double calcularTotal (List<Servicio> servicios) {
 		double total = 0;
 		
 		for (Servicio servicio : servicios) {

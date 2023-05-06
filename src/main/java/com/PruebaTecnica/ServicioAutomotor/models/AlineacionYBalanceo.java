@@ -30,15 +30,19 @@ public class AlineacionYBalanceo extends Servicio {
 	}//CONSTRUCTOR VACIO
 
 	
-	public AlineacionYBalanceo(boolean tieneCambioCubiertas, double precio) {
-		super(precio);
+	public AlineacionYBalanceo(String descripcion, double precio, boolean tieneCambioCubiertas) {
+		super(descripcion, precio);
 		this.tieneCambioCubiertas = tieneCambioCubiertas;
 	}//CONSTRUCTOR
 
 	@Override
 	public String toString() {
-		return "AlineacionYBalanceo [tieneCambioCubiertas=" + tieneCambioCubiertas + "]";
+		return "AlineacionYBalanceo [tieneCambioCubiertas=" + tieneCambioCubiertas + ", idServicio=" + idServicio
+				+ ", createdat=" + createdat + ", updatedat=" + updatedat + ", descripcion=" + descripcion + ", precio="
+				+ precio + "]";
 	}
+
+
 	
     
 }	

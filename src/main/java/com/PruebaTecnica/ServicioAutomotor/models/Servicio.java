@@ -31,14 +31,17 @@ public class Servicio {
 	
 	@Column(name="createdat",  nullable = false)
 	@CreationTimestamp
-	private LocalDateTime createdat;	
+	protected LocalDateTime createdat;	
 	
 	@Column(name="updatedat",  nullable = false)
 	@UpdateTimestamp
-	private LocalDateTime updatedat;
+	protected LocalDateTime updatedat;
+	
+	@Column(name="descripcion",  nullable = false)
+	protected String descripcion;
 	
 	@Column(name= "precio", nullable = false)
-	private double precio;
+	protected double precio;
 
 
 	@ManyToMany
@@ -51,8 +54,9 @@ public class Servicio {
 	}//CONSTRUCTOR VACIO
 	
 
-	public Servicio(double precio) {
+	public Servicio(String descripcion, double precio) {
 		super();
+		this.descripcion = descripcion;
 		this.precio = precio;
 	}
 	//CONSTRUCTOR
@@ -107,9 +111,19 @@ public class Servicio {
 	}
 
 
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Servicio [idServicio=" + idServicio + ", createdat=" + createdat + ", updatedat=" + updatedat
+		return "Servicio [idServicio=" + idServicio + ", descripcion= "+ descripcion+ ", createdat=" + createdat + ", updatedat=" + updatedat
 				+ ", precio=" + precio + "]";
 	}
 	

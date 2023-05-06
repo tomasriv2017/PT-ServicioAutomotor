@@ -1,6 +1,12 @@
 package com.PruebaTecnica.ServicioAutomotor.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,6 +23,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name = "orden_de_trabajo")
@@ -27,8 +35,12 @@ public class OrdenDeTrabajo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOrdenDeTrabajo;
 	
-	@Column(name="fechaYHora",  nullable = false)
-	private LocalDateTime fechaYHora;
+	@Column(name="hora",  nullable = false)
+	private String hora;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@Column(name="fecha",  nullable = false)
+	private LocalDate fecha;
 	
 	@Column(name="total",  nullable = false)
 	private double total;
@@ -39,7 +51,7 @@ public class OrdenDeTrabajo {
 	
 	@ManyToMany
 	@JoinTable(name = "servicio_orden_trabajo",joinColumns = @JoinColumn(name="id_orden_de_trabajo"), inverseJoinColumns = @JoinColumn(name="id_servicio") )
-	private Set<Servicio> servicios;
+	private List<Servicio> servicios;
 	
 	
 	@Column(name="createdat",  nullable = false)
@@ -51,9 +63,10 @@ public class OrdenDeTrabajo {
 	private LocalDateTime updatedat;
 	
 	
-	public OrdenDeTrabajo(LocalDateTime fechaYHora, Vehiculo vehiculo, Set<Servicio> servicios) {
+	public OrdenDeTrabajo( String hora, LocalDate fecha, Vehiculo vehiculo, List<Servicio> servicios) {
 		super();
-		this.fechaYHora = fechaYHora;
+		this.hora = hora;
+		this.fecha = fecha;
 		this.vehiculo = vehiculo;
 		this.servicios = servicios;
 	}//CONSTRUCTOR
@@ -72,13 +85,27 @@ public class OrdenDeTrabajo {
 		this.idOrdenDeTrabajo = idOrdenDeTrabajo;
 	}
 
-	public LocalDateTime getFechaYHora() {
-		return fechaYHora;
+	
+
+	public String getHora() {
+		return hora;
 	}
 
-	public void setFechaYHora(LocalDateTime fechaYHora) {
-		this.fechaYHora = fechaYHora;
+
+	public void setHora(String hora) {
+		this.hora = hora;
 	}
+
+
+	public LocalDate getFecha() {
+		return fecha;
+	}
+
+
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+
 
 	public double getTotal() {
 		return total;
@@ -112,21 +139,31 @@ public class OrdenDeTrabajo {
 		this.updatedat = updatedat;
 	}
 
-	public Set<Servicio> getServicios() {
+	public List<Servicio> getServicios() {
 		return servicios;
 	}
-	public void setServicios(Set<Servicio> servicios) {
+	public void setServicios(List<Servicio> servicios) {
 		this.servicios = servicios;
 	}
 
 
+
+//	public Date getFechaYHora() {
+//		return fechaYHora;
+//	}
+//
+//
+//	public void setFechaYHora(Date fechaYHora) {
+//		this.fechaYHora = fechaYHora;
+//	}
+
+
 	@Override
 	public String toString() {
-		return "OrdenDeTrabajo [idOrdenDeTrabajo=" + idOrdenDeTrabajo + ", fechaYHora=" + fechaYHora + ", total="
-				+ total + ", vehiculo=" + vehiculo + ", createdat=" + createdat + ", updatedat=" + updatedat + "]";
+		return "OrdenDeTrabajo [idOrdenDeTrabajo=" + idOrdenDeTrabajo + ", hora=" + hora + ", fecha=" + fecha
+				+ ", total=" + total + ", vehiculo=" + vehiculo + ", servicios=" + servicios + ", createdat="
+				+ createdat + ", updatedat=" + updatedat + "]";
 	}
 
-	
-	
 	
 }

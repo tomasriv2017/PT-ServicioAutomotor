@@ -23,8 +23,8 @@ public class AceiteYFiltro extends Servicio {
 	} //CONSTRUCTOR VACIO
 
 
-	 public AceiteYFiltro(TipoServicio tipoServicio, double precio) {
-		super(precio);
+	 public AceiteYFiltro(String descripcion, double precio, TipoServicio tipoServicio) {
+		super(descripcion, precio);
 		this.tipoServicio = tipoServicio;
 	}//CONSTRUCTOR
 	 
@@ -45,8 +45,12 @@ public class AceiteYFiltro extends Servicio {
 
 	@Override
 	public String toString() {
-		return "AceiteYFiltro [tipoServicio=" + tipoServicio + "]";
+		return "AceiteYFiltro [tipoServicio=" + tipoServicio + ", idServicio=" + idServicio + ", createdat=" + createdat
+				+ ", updatedat=" + updatedat + ", descripcion=" + descripcion + ", precio=" + precio + "]";
 	}
+
+
+
     
     
     

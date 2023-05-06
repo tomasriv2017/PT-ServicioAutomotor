@@ -64,9 +64,11 @@ public class ClienteService implements IClienteService {
         if (modificado.getNombre()!=null) {
             preModificado.setNombre(modificado.getNombre());
         }
+        if (modificado.getEmail() != null) {
+        	preModificado.setEmail(modificado.getEmail());
+        }
         if (modificado.getDni() != 0) {
             preModificado.setDni(modificado.getDni());
-
         }
 	}
 
