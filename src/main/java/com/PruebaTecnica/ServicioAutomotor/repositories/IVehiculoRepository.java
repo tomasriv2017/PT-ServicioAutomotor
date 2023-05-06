@@ -21,5 +21,4 @@ public interface IVehiculoRepository extends JpaRepository<Vehiculo, Serializabl
 
 	public List<Vehiculo> findAllByCliente(@Param("cliente") Cliente cliente);
 	
-
 }

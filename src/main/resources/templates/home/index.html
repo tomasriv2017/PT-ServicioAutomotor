@@ -55,20 +55,20 @@
             <table class="tabla" id="tabla">
                 <thead class="tabla__head">
                     <tr class="tabla__row-head">
+						<th class="tabla__head-nombre" scope="col">¿Usuario premium?</th>
                         <th class="tabla__head-nombre" scope="col">Apellido</th>
                         <th class="tabla__head-nombre" scope="col">Nombre</th>
                         <th class="tabla__head-nombre" scope="col">Documento</th>
-                        <th class="tabla__head-nombre" scope="col">Tipo-Usuario</th>
                         <th class="tabla__head-nombre" scope="col">E-mail</th>
                         <th th class="tabla__head-nombre" >Acciones</th>
                     </tr>
                 </thead>
                 <tbody class="tabla__body">
                     <tr th:each="cliente:${clientesList}" class="tabla__row-body">
+                        <td th:text="${cliente.cantServicios >= 5} ? 'Si' : 'No'" class="tabla__body-dato"></td>
                         <td th:text= "${cliente.apellido}" class="tabla__body-dato"></td>
                         <td th:text= "${cliente.nombre}" class="tabla__body-dato"></td>
                         <td th:text= "${cliente.dni}" class="tabla__body-dato"></td>
-                        <td th:text= "hola" class="tabla__body-dato"></td>
 	                    <td th:text= "${cliente.email}" class="tabla__body-dato"></td>  
                         <th class="tabla__head-nombre" >Acciones</th>
                         <td class="tabla__body-dato">

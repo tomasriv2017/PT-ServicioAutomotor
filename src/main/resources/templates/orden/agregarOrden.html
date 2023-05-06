@@ -50,6 +50,13 @@
                     </div>
                 </div>
                
+               	             
+				<!--ID-->
+				<div class="form-group" style="display: none;">
+					<p> <label>ID</label></p>
+					<p> <input th:field="${orden.idOrdenDeTrabajo}" type="text" class="form-control" /></p>
+				</div>
+               
                 <!--VEHICULO-->
                 <div class="form__grupo" id="grupo__vehiculo">
                     <label for="documento" class="form__label">Eligir vehiculo con su propietario: </label>
@@ -116,7 +123,7 @@
 	            				<tr th:each="ayf : ${aceiteYFiltroList}">
 	            					<td th:text="${ayf.descripcion}"></td>
 	            					<td th:text="${ayf.tipoServicio}"></td>
-	            					<td th:text="${ayf.precio}"></td>
+	            					<td th:text="${ayf.precio}"></td>>
 	            				</tr>
 	            			</tbody>
         				</table>
@@ -159,6 +166,12 @@
 					<div class="modal-content">
 					
 						<form id="formServicio" th:action="@{/orden/findService}" th:object="${servicioBuscado}" method="POST">
+               	             
+							<!--ID-->
+							<div class="form-group" style="display: none;">
+								<p> <label>ID</label></p>
+								<p> <input th:field="${orden.idOrdenDeTrabajo}" type="text" class="form-control" /></p>
+							</div>
 							
 							<div class="modal-header">
 								<h5 class="modal-title" id="agregarServicioModal">Buscar Servicio</h5>
@@ -203,21 +216,11 @@
 						class="fab fa-github"></i> </a>
 			</div>
 		</footer>
-   		<!--SCRPT-->
-   		<script>
-				$( document ).ready(function() {
-				
-				    var now = new Date();
-				
-				    var day = ("0" + now.getDate()).slice(-2);
-				    var month = ("0" + (now.getMonth() + 1)).slice(-2);
-				
-				    var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-				    $("#fecha").val(today);
-				});
-		</script>
-
-       <!-- <script th:src="@{/js/validarPermisoDiario.js}"></script> -->
+		
+	<!--SCRIPT-->
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script  th:src="@{/js/ordenFunciones.js}"></script></body>
 
 </body>
 </html>

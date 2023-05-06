@@ -36,11 +36,14 @@ public class Cliente {
 	private String nombre;	
 
 	@Column(name="apellido", nullable=false, length=45)
-	private String apellido;
-
+	private String apellido;	
+	
 	@Column(name = "cant_servicios", columnDefinition = "int default 0")
 	private int cantServicios;
 
+	@Column(name="es_premium", columnDefinition = "boolean default false")
+	private boolean esPremium;
+	
 	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, mappedBy="cliente")
 	@JsonIgnore
 	private Set<Vehiculo> vehiculos;
@@ -66,7 +69,6 @@ public class Cliente {
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.email = email;
-//		this.vehiculos = vehiculos;
 	}//CONSTRUCTOR
 
 
@@ -126,6 +128,12 @@ public class Cliente {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public boolean isEsPremium() {
+		return esPremium;
+	}
+	public void setEsPremium(boolean esPremium) {
+		this.esPremium = esPremium;
 	}
 
 

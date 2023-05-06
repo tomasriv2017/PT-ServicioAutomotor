@@ -18,15 +18,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.PruebaTecnica.ServicioAutomotor.helpers.ViewRouterHelpers;
 import com.PruebaTecnica.ServicioAutomotor.models.AceiteYFiltro;
 import com.PruebaTecnica.ServicioAutomotor.models.AlineacionYBalanceo;
+import com.PruebaTecnica.ServicioAutomotor.models.Cliente;
 import com.PruebaTecnica.ServicioAutomotor.models.Lavado;
 import com.PruebaTecnica.ServicioAutomotor.models.OrdenDeTrabajo;
 import com.PruebaTecnica.ServicioAutomotor.models.Servicio;
+import com.PruebaTecnica.ServicioAutomotor.models.Vehiculo;
+import com.PruebaTecnica.ServicioAutomotor.serviceImp.ClienteService;
 import com.PruebaTecnica.ServicioAutomotor.serviceImp.OrdenDeTrabajoService;
 import com.PruebaTecnica.ServicioAutomotor.serviceImp.ServicioService;
 import com.PruebaTecnica.ServicioAutomotor.serviceImp.VehiculoService;
@@ -43,6 +48,9 @@ public class OrdenDeTrabajoController {
 	
 	@Autowired
 	private ServicioService servicioService;
+	
+	@Autowired
+	private ClienteService clienteService;
 	
 	
 	@PostMapping("/new")
@@ -102,18 +110,26 @@ public class OrdenDeTrabajoController {
 	}
 	
 	@GetMapping("/create")
-	public String createOrdenDeTrabajo(Model model) {		
+	public String createOrdenDeTrabajo(Model model) {	
+		
+		List<Vehiculo> listaVehiculos = vehiculoService.listar();
+		
+		for (Vehiculo vehiculos : listaVehiculos) {   
+			if(vehiculos.getCliente().getCantServicios() >= 5 ) {
+				vehiculos.getCliente().setEsPremium(true);
+				clienteService.saveOrUpdate(vehiculos.getCliente()); 
+			}
+		}
+		
 		model.addAttribute("orden", new OrdenDeTrabajo());
 		model.addAttribute("vehiculoList", vehiculoService.listar());
 		model.addAttribute("servicioList", servicioService.listarServicios());
 		model.addAttribute("nuevoServicio", new Servicio());
-		
 		return ViewRouterHelpers.ORDEN_AGREGAR;
 	}
 	
 	@PostMapping("/save")
-	public String saveOrdenDeTrabajo(@Validated @ModelAttribute("orden") OrdenDeTrabajo ordenNueva) {
-		
+	public String saveOrdenDeTrabajo(@Validated @ModelAttribute("orden") OrdenDeTrabajo ordenNueva ) {
 		ordenNueva.setServicios(servicioService.buscarTodosServicioDeListAux());
 		ordenDeTrabajoService.saveOrUpdate(ordenNueva);
 		servicioService.borrarTodosServiciosDeListAux(); // reinicio el listado limpiandolo
@@ -123,15 +139,16 @@ public class OrdenDeTrabajoController {
 	
 	@PostMapping("/findService")
 	public String buscarLugar(@Validated @ModelAttribute("servicioBuscado") Servicio servicio, 
-			@Validated @ModelAttribute("orden") OrdenDeTrabajo orden , Model model) {
-
-		try {
+			@Validated @ModelAttribute("orden") OrdenDeTrabajo orden,
+			Model model) {
+		
+		try {			
 			Servicio servicioBuscado = servicioService.buscarServicioPorDescripcion(servicio.getDescripcion());
 			servicioService.guardarServicioEncontradoEnListAux(servicioBuscado);
 		} catch (Exception e) {
 			model.addAttribute("errorMsg", e.getMessage());
 		}
-			
+					
 		List<Servicio> serviciosAgregados = (List<Servicio>)servicioService.buscarTodosServicioDeListAux();
 		List<Lavado> lavadoList = new ArrayList<>();
 		List<AceiteYFiltro> ayfList = new ArrayList<>();
@@ -143,16 +160,60 @@ public class OrdenDeTrabajoController {
 			if(servicioAux instanceof AceiteYFiltro) {ayfList.add((AceiteYFiltro)servicioAux);}
 			if(servicioAux instanceof AlineacionYBalanceo) {aybList.add((AlineacionYBalanceo)servicioAux);}
 		}
-		model.addAttribute("orden", orden);
+		
+		Optional<OrdenDeTrabajo> ordenEnBD = ordenDeTrabajoService.traerById(orden.getIdOrdenDeTrabajo());
+		if(ordenEnBD.isPresent()) {
+			model.addAttribute("orden", ordenEnBD.get()); 
+			model.addAttribute("editMode", true);
+		}
+		else  model.addAttribute("orden", orden);
+		
+		model.addAttribute("servicioList", getServiciosNoAgregados(serviciosAgregados));
+		model.addAttribute("vehiculoList", vehiculoService.listar());
+		model.addAttribute("lavadoList", lavadoList);
+		model.addAttribute("aceiteYFiltroList", ayfList);
+		model.addAttribute("alineacionYBalanceoList", aybList);
+		model.addAttribute("nuevoServicio", new Servicio());		
+		return ViewRouterHelpers.ORDEN_AGREGAR;
+	}
+	
+	
+	@GetMapping("/edit/{idOrdenDeTrabajo}")
+	public String editOrdenDeTrabajo(@PathVariable int idOrdenDeTrabajo, Model model) throws Exception {
+		Optional<OrdenDeTrabajo>ordenDeTrabajo= ordenDeTrabajoService.traerById(idOrdenDeTrabajo);
+		
+		List<Servicio> serviciosAgregados = ordenDeTrabajo.get().getServicios() ;
+		List<Lavado> lavadoList = new ArrayList<>();
+		List<AceiteYFiltro> ayfList = new ArrayList<>();
+		List<AlineacionYBalanceo> aybList = new ArrayList<>();
+				
+		for (Servicio servicioAux : serviciosAgregados) { //OBTENGO TODOS LOS SERVICOS QUE YA SE ENCUENTRAN SOLICITADOS EN LA ORDEN Y LOS CASTEO A SU TIPO
+			if(servicioAux instanceof Lavado) {lavadoList.add((Lavado)servicioAux);}
+			if(servicioAux instanceof AceiteYFiltro) {ayfList.add((AceiteYFiltro)servicioAux);}
+			if(servicioAux instanceof AlineacionYBalanceo) {aybList.add((AlineacionYBalanceo)servicioAux);}
+		}
+		
+		for (Servicio servicioGuardado  : serviciosAgregados) {
+			servicioService.guardarServicioEncontradoEnListAux(servicioGuardado);
+		}
+		
+		model.addAttribute("orden", ordenDeTrabajo.get());
 		model.addAttribute("servicioList", getServiciosNoAgregados(serviciosAgregados));
 		model.addAttribute("vehiculoList", vehiculoService.listar());
 		model.addAttribute("lavadoList", lavadoList);
 		model.addAttribute("aceiteYFiltroList", ayfList);
 		model.addAttribute("alineacionYBalanceoList", aybList);
 		model.addAttribute("nuevoServicio", new Servicio());
+		model.addAttribute("editMode", true);
 		return ViewRouterHelpers.ORDEN_AGREGAR;
 	}
 	
+	@GetMapping("/delete/{idOrdenDeTrabajo}")
+	public String deleteOrdenDeTrabajo(Model model, @PathVariable int idOrdenDeTrabajo) {
+		ordenDeTrabajoService.delete(idOrdenDeTrabajo);
+		return ViewRouterHelpers.INDEX_HOME_ORDEN;
+	}
+
 	
 	@GetMapping("/cancel")
 	public String cancelarAccion() {

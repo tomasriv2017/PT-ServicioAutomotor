@@ -1,20 +1,20 @@
 package com.PruebaTecnica.ServicioAutomotor.serviceImp;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.PruebaTecnica.ServicioAutomotor.interfaceService.IOrdenDeTrabajoService;
+import com.PruebaTecnica.ServicioAutomotor.models.Cliente;
 import com.PruebaTecnica.ServicioAutomotor.models.OrdenDeTrabajo;
 import com.PruebaTecnica.ServicioAutomotor.models.Servicio;
+import com.PruebaTecnica.ServicioAutomotor.repositories.IClienteRepository;
 import com.PruebaTecnica.ServicioAutomotor.repositories.IOrdenDeTrabajoRepository;
 import com.PruebaTecnica.ServicioAutomotor.repositories.IServicioRepository;
+import com.PruebaTecnica.ServicioAutomotor.repositories.IVehiculoRepository;
 
 @Service
 public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
@@ -24,6 +24,12 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	
 	@Autowired
 	private IServicioRepository servicioRepository;
+
+	@Autowired
+	private IVehiculoRepository vehiculoRepository;
+	
+	@Autowired
+	private IClienteRepository clienteRepository;
 	
 	
 	@Override
@@ -50,8 +56,12 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
         Optional<OrdenDeTrabajo> ordenDeTrabajodb = ordenDeTrabajoRepository.findById(ordenDeTrabajo.getIdOrdenDeTrabajo());
         
         if( !ordenDeTrabajodb.isPresent() ) { 
+    		Cliente clienteDelVehiculo = vehiculoRepository.findById(ordenDeTrabajo.getVehiculo().getIdVehiculo()).get().getCliente();
+    		clienteDelVehiculo.setCantServicios(clienteDelVehiculo.getCantServicios() + ordenDeTrabajo.getServicios().size());
+			clienteRepository.save(clienteDelVehiculo);
+
         	ordenDeTrabajo.setServicios(getServicios(ordenDeTrabajo));
-        	ordenDeTrabajo.setTotal(calcularTotal(ordenDeTrabajo.getServicios()));
+        	ordenDeTrabajo.setTotal(calcularTotal(ordenDeTrabajo));
             return ordenDeTrabajoRepository.save(ordenDeTrabajo);
         }else {
             map(ordenDeTrabajo, ordenDeTrabajodb.get());
@@ -94,15 +104,23 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
         
         if( modificado.getServicios() != null) {
             preModificado.setServicios( getServicios(modificado));
-            preModificado.setTotal( calcularTotal( preModificado.getServicios()));
+            preModificado.setTotal( calcularTotal(preModificado));
         }
 	}
 	
-	private double calcularTotal (List<Servicio> servicios) {
+	private double calcularTotal (OrdenDeTrabajo ordenDeTrabajo) {
 		double total = 0;
-		
-		for (Servicio servicio : servicios) {
+		for (Servicio servicio : ordenDeTrabajo.getServicios()) {
 			total += servicio.getPrecio();
+		}
+		
+		Cliente clienteDelVehiculo = vehiculoRepository.findById(ordenDeTrabajo.getVehiculo().getIdVehiculo()).get().getCliente();
+				
+		if(clienteDelVehiculo.isEsPremium()) {
+			total -= total*0.15;
+			clienteDelVehiculo.setCantServicios(0);
+			clienteDelVehiculo.setEsPremium(false);
+			clienteRepository.save(clienteDelVehiculo);
 		}
 		return total;
 	}
