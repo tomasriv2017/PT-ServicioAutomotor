@@ -29,7 +29,7 @@ public class OrdenDeTrabajo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOrdenDeTrabajo;
 
-	@DateTimeFormat(pattern="yyyy-MM-dd'T'hh:mm")
+	@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
     @Column(name="fecha_Hora",  nullable = false)
     private Date fechaHora;
 	
