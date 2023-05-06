@@ -19,3 +19,8 @@ INSERT INTO `pruebatecnica`.`servicio` VALUES (6, sysdate(), "Alineacion y Balan
 INSERT INTO `pruebatecnica`.`servicio` VALUES (7, sysdate(), "Alineacion y Balanceo - Con cambio", 1100,  sysdate());
 INSERT INTO `pruebatecnica`.`alineacion_y_balanceo` VALUES (0, 6);
 INSERT INTO `pruebatecnica`.`alineacion_y_balanceo` VALUES (1, 7);
+
+/*MARCAS*/
+INSERT INTO `pruebatecnica`.`marca` (id_marca, createdat, marca, updatedat) VALUES (1, sysdate(), 'Ford', sysdate() );
+INSERT INTO `pruebatecnica`.`marca` (id_marca, createdat, marca, updatedat) VALUES (2, sysdate(), 'Chevrolet', sysdate() );
+INSERT INTO `pruebatecnica`.`marca` (id_marca, createdat, marca, updatedat) VALUES (3, sysdate(), 'Toyota', sysdate() );

@@ -42,36 +42,14 @@
              <!--FORMULARIO DE ORDEN DE TRABAJO-->  
             <form th:action="@{/orden/save}" th:object="${orden}" method="POST" class="form" id="form">
 	        
-	        	<!--FECHA Y HORA-->
-	        	<!--
-	           <div class="form__grupo" id="grupo__fecha">
-                    <label for="permiso" class="form__label">Fecha Y Hora</label>
-                    <div class="form__grupo-input">
-                        <input th:field="${orden.fechaYHora}"  type="datetime-local" id="fecha" class="form__input">
-                        <i class="fas fa-times-circle form__validacion-estado"></i>
-                    </div>
-                </div>
-	        -->
-	             
-           	<!--FECHA-->
-                <div class="form__grupo" id="grupo__fecha">
-                    <label for="permiso" class="form__label">Fecha</label>
-                    <div class="form__grupo-input">
-                        <input th:field="${orden.fecha}"  type="date" id="fecha" class="form__input">
-                        <i class="fas fa-times-circle form__validacion-estado"></i>
-                    </div>
-                </div>
-                
-                	             
-           	<!--HORA-->
-                <div class="form__grupo" id="grupo__fecha">
+                 <div class="form__grupo" id="grupo__fecha">
                     <label for="permiso" class="form__label">Hora</label>
                     <div class="form__grupo-input">
-                        <input th:field="${hora}"  type="time" class="form__input">
+                        <input th:field="${orden.fechaHora}"  type="datetime-local" class="form__input">
                         <i class="fas fa-times-circle form__validacion-estado"></i>
                     </div>
                 </div>
-                
+               
                 <!--VEHICULO-->
                 <div class="form__grupo" id="grupo__vehiculo">
                     <label for="documento" class="form__label">Eligir vehiculo con su propietario: </label>

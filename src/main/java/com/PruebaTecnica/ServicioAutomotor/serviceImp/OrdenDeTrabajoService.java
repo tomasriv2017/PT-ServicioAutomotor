@@ -79,12 +79,12 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	
 	private void map(OrdenDeTrabajo modificado, OrdenDeTrabajo preModificado ){
 		
-        if( modificado.getFecha() != null) {
-            preModificado.setFecha(modificado.getFecha());
+        if( modificado.getFechaHora() != null) {
+            preModificado.setFechaHora(modificado.getFechaHora());
         }
         
-        if( modificado.getHora() != null) {
-            preModificado.setHora(modificado.getHora());
+        if( modificado.getFechaHora() != null) {
+            preModificado.setFechaHora(modificado.getFechaHora());
         }
         
         

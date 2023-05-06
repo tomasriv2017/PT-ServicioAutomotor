@@ -60,8 +60,7 @@
              <table class="tabla" id="tabla">
 				<thead class="tabla__head">
 					<tr class="tabla__row-head">
-						<th class="tabla__head-nombre" scope="col">Fecha</th>
-						<th class="tabla__head-nombre" scope="col">Hora</th>
+						<th class="tabla__head-nombre" scope="col">Fecha y Hora</th>
 						<th class="tabla__head-nombre" scope="col">Cliente</th>
 						<th class="tabla__head-nombre" scope="col">Patente del Vehiculo</th>
 						<th class="tabla__head-nombre" scope="col">Total</th>
@@ -70,8 +69,7 @@
 				</thead>
 				<tbody class="tabla__body">
 					<tr th:each="orden:${ordenesList}" class="tabla__row-body">
-						<td th:text="${orden.fecha}" class="tabla__body-dato"></td>
-						<td th:text="${orden.hora}" class="tabla__body-dato"></td>
+						<td th:text="${orden.fechaHora}" class="tabla__body-dato"></td>
 						<td th:text="${orden.vehiculo.cliente.nombre}+ '  ' + ${orden.vehiculo.cliente.apellido}"  class="tabla__body-dato"></td>
 						<td th:text="${orden.vehiculo.patente}" class="tabla__body-dato"></td>
 						<td th:text="${orden.total}" class="tabla__body-dato"></td>
