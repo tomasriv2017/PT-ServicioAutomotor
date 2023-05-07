@@ -29,9 +29,9 @@ public class MarcaService implements IMarcaService{
 	}
 
 	@Override
-	public Optional<Marca> traerByMarca(String marca) {
+	public Optional<Marca> traerByMarca(String nombreMarca) {
 		// TODO Auto-generated method stub
-		return marcaRepository.findMarcaByMarca(marca);
+		return marcaRepository.findMarcaByNombreMarca(nombreMarca);
 	}
 
 	@Override
@@ -55,8 +55,8 @@ public class MarcaService implements IMarcaService{
 	
 	private void map(Marca modificado, Marca preModificado ){
 
-        if(modificado.getMarca()!=null) {
-            preModificado.setMarca(modificado.getMarca());
+        if(modificado.getNombreMarca()!=null) {
+            preModificado.setNombreMarca(modificado.getNombreMarca());
         }
         
 	}

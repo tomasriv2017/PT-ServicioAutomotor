@@ -7,14 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.PruebaTecnica.ServicioAutomotor.helpers.ViewRouterHelpers;
 import com.PruebaTecnica.ServicioAutomotor.models.Marca;
 import com.PruebaTecnica.ServicioAutomotor.serviceImp.MarcaService;
 
@@ -27,7 +31,7 @@ public class MarcaController {
 	
 	@PostMapping("/new")
     public ResponseEntity<?> crearMarca(@RequestBody Marca marcaNuevo) throws Exception{
-        java.util.Optional<Marca> m = marcaService.traerByMarca(marcaNuevo.getMarca());
+        java.util.Optional<Marca> m = marcaService.traerByMarca(marcaNuevo.getNombreMarca());
         if(!m.isPresent()) {
             return new ResponseEntity<Marca>(marcaService.saveOrUpdate(marcaNuevo), HttpStatus.CREATED);
         }else {
@@ -60,7 +64,7 @@ public class MarcaController {
 	}
 	
 	
-	@GetMapping("/")
+	@GetMapping("/listar")
 	public ResponseEntity<?> listarMarcas() {
 		  return new ResponseEntity<List<Marca>>(marcaService.listar(),  HttpStatus.OK);
 	}
@@ -81,6 +85,40 @@ public class MarcaController {
 		if(!marcaBuscada.isPresent()) {
 			return new ResponseEntity<String>("La marca buscada no existe", HttpStatus.NOT_FOUND);
 		} else return new ResponseEntity<Marca>(marcaBuscada.get(), HttpStatus.FOUND);
+	}
+	
+	
+	/****************************************************MVC**************************************************************/
+	@GetMapping("/")
+	public String listMarca(Model model) {
+		model.addAttribute("marcaList",  marcaService.listar());
+		return ViewRouterHelpers.MARCA_VISTA;
+	}
+	
+	
+	@GetMapping("/create")
+	public String createMarca(Model model) {
+		model.addAttribute("marca", new Marca());
+		return ViewRouterHelpers.MARCA_AGREGAR;
+	}
+
+	@PostMapping("/save")
+	public String saveMarca(@Validated @ModelAttribute("marca") Marca marca, Model model) {			
+		marcaService.saveOrUpdate(marca);
+		return ViewRouterHelpers.INDEX_HOME_MARCA;
+	}
+	
+	@GetMapping("/edit/{idMarca}")
+	public String editMarca(@PathVariable int idMarca, Model model) {
+		Optional<Marca> marcaBuscada= marcaService.traerById(idMarca);
+		model.addAttribute("marca", marcaBuscada.get());
+		model.addAttribute("editMode", true);
+		return ViewRouterHelpers.MARCA_AGREGAR;
+	}
+
+	@GetMapping("/cancel")
+	public String cancelAction() {
+		return ViewRouterHelpers.INDEX_HOME_MARCA;
 	}
 	
 }

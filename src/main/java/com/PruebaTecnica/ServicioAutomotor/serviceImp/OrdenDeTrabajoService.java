@@ -54,12 +54,7 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	public OrdenDeTrabajo saveOrUpdate(OrdenDeTrabajo ordenDeTrabajo) {
 		// TODO Auto-generated method stub
         Optional<OrdenDeTrabajo> ordenDeTrabajodb = ordenDeTrabajoRepository.findById(ordenDeTrabajo.getIdOrdenDeTrabajo());
-        
         if( !ordenDeTrabajodb.isPresent() ) { 
-    		Cliente clienteDelVehiculo = vehiculoRepository.findById(ordenDeTrabajo.getVehiculo().getIdVehiculo()).get().getCliente();
-    		clienteDelVehiculo.setCantServicios(clienteDelVehiculo.getCantServicios() + ordenDeTrabajo.getServicios().size());
-			clienteRepository.save(clienteDelVehiculo);
-
         	ordenDeTrabajo.setServicios(getServicios(ordenDeTrabajo));
         	ordenDeTrabajo.setTotal(calcularTotal(ordenDeTrabajo));
             return ordenDeTrabajoRepository.save(ordenDeTrabajo);
@@ -70,11 +65,16 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	}
 
 	@Override
-	public void delete(int idOrdenDeTrabajo) {
+	public void delete(int idOrdenDeTrabajo){
 		// TODO Auto-generated method stub
 		ordenDeTrabajoRepository.deleteById(idOrdenDeTrabajo);
 	}
 	
+	@Override
+	public List<OrdenDeTrabajo> listarByVehiculo(int idVehiculo) {
+		// TODO Auto-generated method stub
+		return ordenDeTrabajoRepository.listOrdenDeTrabajoByVehiculo(idVehiculo);
+	}
 	
 	
 	private List<Servicio> getServicios(OrdenDeTrabajo ordenDeTrabajo) {
@@ -113,15 +113,15 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 		for (Servicio servicio : ordenDeTrabajo.getServicios()) {
 			total += servicio.getPrecio();
 		}
-		
 		Cliente clienteDelVehiculo = vehiculoRepository.findById(ordenDeTrabajo.getVehiculo().getIdVehiculo()).get().getCliente();
-				
+		clienteDelVehiculo.setCantServicios(clienteDelVehiculo.getCantServicios() + ordenDeTrabajo.getServicios().size());
+		
 		if(clienteDelVehiculo.isEsPremium()) {
-			total -= total*0.15;
-			clienteDelVehiculo.setCantServicios(0);
-			clienteDelVehiculo.setEsPremium(false);
-			clienteRepository.save(clienteDelVehiculo);
+			total -= total*0.15; //LE APLICO UN DESCUENTO DEL 15% AL TOTAL A PAGAR
+			clienteDelVehiculo.setCantServicios(0); //RENICIO AL CANT. DE SERVICIOS DEL CLIENTE SETEANDOLO EN 0
+			clienteDelVehiculo.setEsPremium(false); //EL CLIENTE VUELVE  A SER 'NO PREMIUM'
 		}
+		clienteRepository.save(clienteDelVehiculo);
 		return total;
 	}
 

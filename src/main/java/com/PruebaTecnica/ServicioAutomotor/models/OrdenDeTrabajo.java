@@ -24,7 +24,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "orden_de_trabajo")
 public class OrdenDeTrabajo {
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOrdenDeTrabajo;
@@ -43,8 +42,7 @@ public class OrdenDeTrabajo {
 	@ManyToMany
 	@JoinTable(name = "servicio_orden_trabajo",joinColumns = @JoinColumn(name="id_orden_de_trabajo"), inverseJoinColumns = @JoinColumn(name="id_servicio") )
 	private List<Servicio> servicios;
-	
-	
+		
 	@Column(name="createdat",  nullable = false)
 	@CreationTimestamp
 	private LocalDateTime createdat;	
@@ -52,7 +50,6 @@ public class OrdenDeTrabajo {
 	@Column(name="updatedat",  nullable = false)
 	@UpdateTimestamp
 	private LocalDateTime updatedat;
-	
 	
 	public OrdenDeTrabajo( Date fechaHora, Vehiculo vehiculo, List<Servicio> servicios) {
 		super();
@@ -126,12 +123,11 @@ public class OrdenDeTrabajo {
 		this.servicios = servicios;
 	}
 
-
 	@Override
 	public String toString() {
 		return "OrdenDeTrabajo [idOrdenDeTrabajo=" + idOrdenDeTrabajo + ", fechaHora=" + fechaHora + ", total=" + total
 				+ ", vehiculo=" + vehiculo + ", servicios=" + servicios + ", createdat=" + createdat + ", updatedat="
-				+ updatedat + "]";
+				+ updatedat +  "]";
 	}
 	
 	

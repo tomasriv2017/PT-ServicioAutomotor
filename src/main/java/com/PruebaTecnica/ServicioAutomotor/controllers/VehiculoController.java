@@ -112,7 +112,6 @@ public class VehiculoController {
 	
 	@GetMapping("/marca/{idMarca}")
 	public ResponseEntity<?> traerVehiculoByMarca(@PathVariable(name="idMarca") int idMarca){		
-		boolean notExists = false;
 		Optional<Marca> marca = marcaService.traerById(idMarca);
 				
 		if (!marca.isPresent())  {
@@ -126,7 +125,7 @@ public class VehiculoController {
 	/***************************************************MVC**************************************************/
 	
 	@GetMapping("/")
-	public String home(Model model) {
+	public String listVehiculo(Model model) {
 		model.addAttribute("vehiculoList",  vehiculoService.listar());
 		return ViewRouterHelpers.VEHICULO_VISTA;
 	}

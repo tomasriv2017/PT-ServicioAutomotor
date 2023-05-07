@@ -120,7 +120,6 @@ public class Servicio {
 		this.descripcion = descripcion;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Servicio [idServicio=" + idServicio + ", descripcion= "+ descripcion+ ", createdat=" + createdat + ", updatedat=" + updatedat

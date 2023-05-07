@@ -45,8 +45,7 @@ public class AceiteYFiltro extends Servicio {
 
 	@Override
 	public String toString() {
-		return "AceiteYFiltro [tipoServicio=" + tipoServicio + ", idServicio=" + idServicio + ", createdat=" + createdat
-				+ ", updatedat=" + updatedat + ", descripcion=" + descripcion + ", precio=" + precio + "]";
+		return descripcion;
 	}
 
 

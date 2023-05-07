@@ -37,9 +37,7 @@ public class AlineacionYBalanceo extends Servicio {
 
 	@Override
 	public String toString() {
-		return "AlineacionYBalanceo [tieneCambioCubiertas=" + tieneCambioCubiertas + ", idServicio=" + idServicio
-				+ ", createdat=" + createdat + ", updatedat=" + updatedat + ", descripcion=" + descripcion + ", precio="
-				+ precio + "]";
+		return  descripcion;
 	}
 
 

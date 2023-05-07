@@ -45,8 +45,8 @@ public class Lavado  extends Servicio{
 
 	@Override
 	public String toString() {
-		return "Lavado [tipoServicio=" + tipoServicio + ", idServicio=" + idServicio + ", createdat=" + createdat
-				+ ", updatedat=" + updatedat + ", descripcion=" + descripcion + ", precio=" + precio + "]";
+		 return descripcion;
+
 	}
 
 
