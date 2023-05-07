@@ -57,6 +57,7 @@
      
                 </div>
             </div>
+                      
 			<table class="table blueTable" id="tabla">
 				<thead class="tabla__head">
                     <tr class="tabla__row-head">
@@ -77,7 +78,7 @@
 	                    <td th:text= "${cliente.email}" class="tabla__body-dato"></td>  
                         <td class="tabla__body-dato">
                             <a th:href= "@{/client/edit/}+ ${cliente.idCliente}"class="tabla__boton-editar"><i class="fa-sharp fa-solid fa-pen-clip"></i></a>
-                            <a th:onclick="eliminar([[${cliente.idCliente}]])" class="tabla__boton-eliminar" href="#" ><i class="fa-sharp fa-solid fa-trash"></i></a> 
+                            <a th:onclick="eliminarCliente([[${cliente.idCliente}]])" class="tabla__boton-eliminar" href="#" ><i class="fa-sharp fa-solid fa-trash"></i></a> 
                        	</td>
                     </tr>
                 </tbody>
@@ -97,7 +98,7 @@
 	<!--SCRIPT-->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script  th:src="@{/js/clienteFunciones.js}"></script>
+	<script  th:src="@{/js/funciones.js}"></script>
 	
 </body>
 </html>

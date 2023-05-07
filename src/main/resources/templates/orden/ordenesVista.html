@@ -81,7 +81,7 @@
 						<td th:text="${orden.total}" class="tabla__body-dato"></td>
                         <td class="tabla__body-dato">
                             <a th:href= "@{/orden/edit/}+ ${orden.idOrdenDeTrabajo}"class="tabla__boton-editar"><i class="fa-sharp fa-solid fa-pen-clip"></i></a>
-                            <a th:onclick="eliminar([[${orden.idOrdenDeTrabajo}]])" class="tabla__boton-eliminar" href="#"><i class="fa-sharp fa-solid fa-trash"></i></a> 
+                            <a th:onclick="eliminarOrden([[${orden.idOrdenDeTrabajo}]])" class="tabla__boton-eliminar" href="#"><i class="fa-sharp fa-solid fa-trash"></i></a> 
                        	</td>
 					</tr>
 				</tbody>
@@ -132,6 +132,6 @@
 				
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script  th:src="@{/js/ordenFunciones.js}"></script></body>
+	<script  th:src="@{/js/funciones.js}"></script></body>
 
 </html>
