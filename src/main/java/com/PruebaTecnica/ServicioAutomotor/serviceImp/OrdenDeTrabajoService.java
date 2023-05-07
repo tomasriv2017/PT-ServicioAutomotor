@@ -51,8 +51,12 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	}
 
 	@Override
-	public OrdenDeTrabajo saveOrUpdate(OrdenDeTrabajo ordenDeTrabajo) {
+	public OrdenDeTrabajo saveOrUpdate(OrdenDeTrabajo ordenDeTrabajo) throws Exception{
 		// TODO Auto-generated method stub
+		System.out.println(ordenDeTrabajo);
+		if(ordenDeTrabajo.getServicios().isEmpty() == true) { 
+			throw new Exception("La orden debe tener cargada al menos un servicio");
+		}
         Optional<OrdenDeTrabajo> ordenDeTrabajodb = ordenDeTrabajoRepository.findById(ordenDeTrabajo.getIdOrdenDeTrabajo());
         if( !ordenDeTrabajodb.isPresent() ) { 
         	ordenDeTrabajo.setServicios(getServicios(ordenDeTrabajo));

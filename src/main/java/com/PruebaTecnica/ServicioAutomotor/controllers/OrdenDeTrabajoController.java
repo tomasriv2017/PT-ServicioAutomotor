@@ -118,10 +118,20 @@ public class OrdenDeTrabajoController {
 	}
 	
 	@PostMapping("/save")
-	public String saveOrdenDeTrabajo(@Validated @ModelAttribute("orden") OrdenDeTrabajo ordenNueva ) {
-		ordenNueva.setServicios(servicioService.buscarTodosServicioDeListAux());
-		ordenDeTrabajoService.saveOrUpdate(ordenNueva);
-		servicioService.borrarTodosServiciosDeListAux(); // reinicio el listado limpiandolo
+	public String saveOrdenDeTrabajo(@Validated @ModelAttribute("orden") OrdenDeTrabajo ordenNueva, Model model ) {
+			ordenNueva.setServicios(servicioService.buscarTodosServicioDeListAux());
+			try {
+				ordenDeTrabajoService.saveOrUpdate(ordenNueva);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				model.addAttribute("errorMsg", e.getMessage());
+				model.addAttribute("orden", new OrdenDeTrabajo());
+				model.addAttribute("vehiculoList", vehiculoService.listar());
+				model.addAttribute("servicioList", servicioService.listarServicios());
+				model.addAttribute("nuevoServicio", new Servicio());
+				return ViewRouterHelpers.ORDEN_AGREGAR;
+			}
+			servicioService.borrarTodosServiciosDeListAux(); // reinicio el listado limpiandolo
 		return ViewRouterHelpers.INDEX_HOME_ORDEN;
 	}
 	
@@ -192,8 +202,6 @@ public class OrdenDeTrabajoController {
 		return ViewRouterHelpers.INDEX_HOME_ORDEN;
 	}
 
-	
-	
 	@GetMapping("/cancel")
 	public String cancelarAccion() {
 		servicioService.borrarTodosServiciosDeListAux(); // RENINICIO EL LISTADO LIMPIANDOLO PARA EL PROXIMO TURNO A CREAR

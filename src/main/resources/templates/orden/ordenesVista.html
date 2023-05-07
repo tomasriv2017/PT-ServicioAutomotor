@@ -95,7 +95,7 @@
 					<label class="mr-sm-2" for="clienteSelect">Cliente:</label>
 					<select th:name="cliente" class="custom-select" id="clienteSelect">
 						<option value=-1 disabled >--Seleccionar Cliente--</option>
-						<option th:each="c : ${clientesList}" th:value="${c.idCliente}" th:text="${c.nombre}+ ' ' + ${c.apellido}"
+						<option th:each="c : ${clientesList}" th:value="${c.idCliente}" th:text="'DNI: ' + ${c.dni}+ ' ' + ${c.nombre}+ ' ' + ${c.apellido}"
 							class="form__select-option" />
 					</select>
 					<button type="submit" class="mt-2 btn btn-outline-primary d-block">Filtrar</button>
@@ -110,7 +110,7 @@
 					<label class="mr-sm-2" for="vehiculoSelect">Vehiculo:</label>
 					<select th:name="vehiculo" class="custom-select" id="clienteSelect">
 						<option value=-1 disabled >--Seleccionar Vehiculo--</option>
-						<option th:each="v : ${vehiculoList}" th:value="${v.idVehiculo}" th:text="${v.marca.nombreMarca}+ ' - ' + ${v.modelo}"
+						<option th:each="v : ${vehiculoList}" th:value="${v.idVehiculo}" th:text="'Patente: '+ ${v.patente} + ' - ' +  ${v.marca.nombreMarca}+ ' - ' + ${v.modelo}"
 							class="form__select-option" />
 					</select>
 		
@@ -126,7 +126,7 @@
 	<!--FOOTER-->
 	<footer>
 		<div class="redes-sociales">
-			<a href="https://github.com/SebastianMMacario/Grupo-08-OO2-2021" target="_BLANK" class="redes-sociales__red"><i class="fa-brands fa-github-alt"></i> </a>
+				<a href="https://github.com/tomasriv2017/PT-ServicioAutomotor" target="_BLANK" class="redes-sociales__red"><i class="fa-brands fa-github-alt"></i> </a>
 		</div>
 	</footer>
 				

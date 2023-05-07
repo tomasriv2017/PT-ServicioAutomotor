@@ -1,7 +1,9 @@
 const expresiones = {
-	patente: /^[a-zA-Z]{3}\d{3}$/ ,//Patente => 3 letras y 3 numeros .
+	patente: {
+			opcion1: 		/^[a-zA-Z]{3}\d{3}$/ ,//Patente => 3 letras y 3 numeros .
+			opcion2: 		 /^[a-zA-Z]{2}\d{3}[a-zA-Z]{2}$/,
+	},
 	modelo: /^[a-zA-Z\s]{1,20}$/ // Solor letras con un maximo de 20 caracteres
-
 };
 
 const campos = {
@@ -25,25 +27,49 @@ const validarFormulario = (evento)=>{
 }
 
 const validarCampo=(expresion, input, campo) =>{
-    if(expresion.test(input.value)){
-        document.getElementById(`grupo__${campo}`).classList.remove("form__grupo-incorrecto");
-        document.getElementById(`grupo__${campo}`).classList.add("form__grupo-correcto");
-        document.querySelector(`#grupo__${campo} i`).classList.remove("fa-times-circle");
-        document.querySelector(`#grupo__${campo} i`).classList.add("fa-check-circle");
-
-        document.querySelector(`#grupo__${campo} .form__error-input-msg`).classList.remove("form__error-input-msg-activo");
-        campos[campo] = true;
-    }
-    else{
-        document.getElementById(`grupo__${campo}`).classList.remove("form__grupo-correcto");
-        document.getElementById(`grupo__${campo}`).classList.add("form__grupo-incorrecto");
-        document.querySelector(`#grupo__${campo} i`).classList.remove("fa-check-circle");
-        document.querySelector(`#grupo__${campo} i`).classList.add("fa-times-circle");
-
-        document.querySelector(`#grupo__${campo} .form__error-input-msg`).classList.add("form__error-input-msg-activo");
-        campos[campo] = false;
-    }
+	if(input.name === "patente"){
+		if(expresion.opcion1.test(input.value) || expresion.opcion2.test(input.value)){
+	        document.getElementById(`grupo__${campo}`).classList.remove("form__grupo-incorrecto");
+	        document.getElementById(`grupo__${campo}`).classList.add("form__grupo-correcto");
+	        document.querySelector(`#grupo__${campo} i`).classList.remove("fa-times-circle");
+	        document.querySelector(`#grupo__${campo} i`).classList.add("fa-check-circle");
+	
+	        document.querySelector(`#grupo__${campo} .form__error-input-msg`).classList.remove("form__error-input-msg-activo");
+       		campos[campo] = true;
+    	}
+		else{
+	        document.getElementById(`grupo__${campo}`).classList.remove("form__grupo-correcto");
+	        document.getElementById(`grupo__${campo}`).classList.add("form__grupo-incorrecto");
+	        document.querySelector(`#grupo__${campo} i`).classList.remove("fa-check-circle");
+	        document.querySelector(`#grupo__${campo} i`).classList.add("fa-times-circle");
+	
+	        document.querySelector(`#grupo__${campo} .form__error-input-msg`).classList.add("form__error-input-msg-activo");
+	        campos[campo] = false;
+	    }
+	}
+	else{
+		if(expresion.test(input.value)){	
+	        document.getElementById(`grupo__${campo}`).classList.remove("form__grupo-incorrecto");
+	        document.getElementById(`grupo__${campo}`).classList.add("form__grupo-correcto");
+	        document.querySelector(`#grupo__${campo} i`).classList.remove("fa-times-circle");
+	        document.querySelector(`#grupo__${campo} i`).classList.add("fa-check-circle");
+	
+	        document.querySelector(`#grupo__${campo} .form__error-input-msg`).classList.remove("form__error-input-msg-activo");
+	        campos[campo] = true;
+    	}
+	    else{
+	        document.getElementById(`grupo__${campo}`).classList.remove("form__grupo-correcto");
+	        document.getElementById(`grupo__${campo}`).classList.add("form__grupo-incorrecto");
+	        document.querySelector(`#grupo__${campo} i`).classList.remove("fa-check-circle");
+	        document.querySelector(`#grupo__${campo} i`).classList.add("fa-times-circle");
+	
+	        document.querySelector(`#grupo__${campo} .form__error-input-msg`).classList.add("form__error-input-msg-activo");
+	        campos[campo] = false;
+	    }
+	}
 }
+    
+
 
 
 inputs.forEach( (input) =>{
