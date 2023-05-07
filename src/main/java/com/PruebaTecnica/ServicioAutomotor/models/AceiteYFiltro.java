@@ -22,13 +22,6 @@ public class AceiteYFiltro extends Servicio {
 		super();
 	} //CONSTRUCTOR VACIO
 
-
-	 public AceiteYFiltro(String descripcion, double precio, TipoServicio tipoServicio) {
-		super(descripcion, precio);
-		this.tipoServicio = tipoServicio;
-	}//CONSTRUCTOR
-	 
-
 	public enum TipoServicio {
 	        BASICO,
 	        ALTO_RENDIMIENTO
