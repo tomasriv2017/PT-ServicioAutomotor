@@ -27,13 +27,6 @@ public class Lavado  extends Servicio{
 		super();
 	}//CONSTRUCTOR VACIO
 
-	
-	public Lavado(String descripcion, double precio, TipoServicio tipoServicio) {
-		super(descripcion,precio);
-		this.tipoServicio = tipoServicio;
-	}
-
-
 	public TipoServicio getTipoServicio() {
 		return tipoServicio;
 	}

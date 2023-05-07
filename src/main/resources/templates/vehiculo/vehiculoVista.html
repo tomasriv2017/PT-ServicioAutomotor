@@ -75,7 +75,7 @@
 						<td class="tabla__body-dato">
 							<a th:href="@{/car/edit/}+ ${vehiculo.idVehiculo}" class="tabla__boton-editar"><i
 									class="fa-sharp fa-solid fa-pen-clip"></i></a>
-							<a th:onclick="eliminar([[${vehiculo.idVehiculo}]])" class="tabla__boton-eliminar" href="#"><i
+							<a th:onclick="eliminarVehiculo([[${vehiculo.idVehiculo}]])" class="tabla__boton-eliminar" href="#"><i
 									class="fa-sharp fa-solid fa-trash"></i></a>
 						</td>
 					</tr>
@@ -96,7 +96,7 @@
 	<!--SCRIPT-->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script  th:src="@{/js/vehiculoFunciones.js}"></script>
+	<script  th:src="@{/js/funciones.js}"></script>
 	
 </body>
 </html>

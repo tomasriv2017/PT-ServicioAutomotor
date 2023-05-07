@@ -62,16 +62,6 @@ public class Cliente {
 		super();
 	} //CONSTRUCTOR VACIO
 
-
-	public Cliente(long dni, String nombre, String apellido, String email) {
-		super();
-		this.dni = dni;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.email = email;
-	}//CONSTRUCTOR
-
-
 	public int getIdCliente() {
 		return idCliente;
 	}

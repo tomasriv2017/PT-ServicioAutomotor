@@ -113,7 +113,8 @@ public class ClienteController {
 
 	@GetMapping("/delete/{idCliente}")
 	public String deleteClient(Model model, @PathVariable int idCliente) {
-		clienteService.delete(idCliente);
+			clienteService.delete(idCliente);
+
 		return ViewRouterHelpers.INDEX_HOME_CLIENTE;
 	}
 

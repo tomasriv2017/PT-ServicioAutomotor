@@ -50,15 +50,7 @@ public class OrdenDeTrabajo {
 	@Column(name="updatedat",  nullable = false)
 	@UpdateTimestamp
 	private LocalDateTime updatedat;
-	
-	public OrdenDeTrabajo( Date fechaHora, Vehiculo vehiculo, List<Servicio> servicios) {
-		super();
-		this.fechaHora = fechaHora;
-		this.vehiculo = vehiculo;
-		this.servicios = servicios;
-	}//CONSTRUCTOR
-	
-	
+		
 	public OrdenDeTrabajo() {
 		super();
 	}//CONSTRUCTOR VACIO

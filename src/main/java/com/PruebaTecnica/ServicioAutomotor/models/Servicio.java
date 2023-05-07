@@ -53,15 +53,6 @@ public class Servicio {
 		super();
 	}//CONSTRUCTOR VACIO
 	
-
-	public Servicio(String descripcion, double precio) {
-		super();
-		this.descripcion = descripcion;
-		this.precio = precio;
-	}
-	//CONSTRUCTOR
-
-
 	public int getIdServicio() {
 		return idServicio;
 	}

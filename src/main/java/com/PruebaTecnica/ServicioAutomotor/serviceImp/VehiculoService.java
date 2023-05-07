@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.PruebaTecnica.ServicioAutomotor.interfaceService.IVehiculoService;
 import com.PruebaTecnica.ServicioAutomotor.models.Cliente;
 import com.PruebaTecnica.ServicioAutomotor.models.Marca;
+import com.PruebaTecnica.ServicioAutomotor.models.OrdenDeTrabajo;
 import com.PruebaTecnica.ServicioAutomotor.models.Vehiculo;
+import com.PruebaTecnica.ServicioAutomotor.repositories.IOrdenDeTrabajoRepository;
 import com.PruebaTecnica.ServicioAutomotor.repositories.IVehiculoRepository;
 
 @Service
@@ -17,6 +19,9 @@ public class VehiculoService implements IVehiculoService {
 
 	@Autowired
 	private IVehiculoRepository vehiculoRepository;
+	
+	@Autowired
+	private IOrdenDeTrabajoRepository ordenRepository;
 	
 	@Override
 	public List<Vehiculo> listar() {
@@ -63,7 +68,13 @@ public class VehiculoService implements IVehiculoService {
 	@Override
 	public void delete(int idVehiculo) {
 		// TODO Auto-generated method stub
-		vehiculoRepository.deleteById(idVehiculo);
+		List<OrdenDeTrabajo> ordenesDelVehiculo = ordenRepository.listOrdenDeTrabajoByVehiculo(idVehiculo); //OBTENGO TODOS LAS ORDENES CREADAS CON EL VEHICULO INDICADO
+		if(ordenesDelVehiculo != null) {
+			for (OrdenDeTrabajo ordenDelVehiculo : ordenesDelVehiculo) {
+				ordenRepository.delete(ordenDelVehiculo); //ELIMINO CADA ORDEN REGISTRADA AL VEHICULO INDICADO
+			}
+		}
+		vehiculoRepository.deleteById(idVehiculo); //UNA VEZ ELIMINADA LAS ORDENES DEL MISMO, ELIMINO EL VEHICULO INIDCADO
 	}
 	
 	

@@ -53,15 +53,6 @@ public class Vehiculo {
 		super();
 	} //CONSTRUCTOR VACIO
 
-	
-	public Vehiculo(String patente, Cliente cliente, Marca marca, String modelo) {
-		super();
-		this.patente = patente;
-		this.cliente = cliente;
-		this.marca = marca;
-		this.modelo = modelo;
-	}//CONSTRUCTOR
-
 	public int getIdVehiculo() {
 		return idVehiculo;
 	}

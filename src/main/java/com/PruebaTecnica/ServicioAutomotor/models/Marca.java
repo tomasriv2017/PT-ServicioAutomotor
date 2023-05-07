@@ -46,12 +46,6 @@ public class Marca {
 	}//CONSTRUCTOR VACIO
 
 	
-	public Marca(String nombreMarca) {
-		super();
-		this.nombreMarca = nombreMarca;
-	}//CONSTRUCTOR
-
-
 	public int getIdMarca() {
 		return idMarca;
 	}

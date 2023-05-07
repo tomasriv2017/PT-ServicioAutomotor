@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.PruebaTecnica.ServicioAutomotor.interfaceService.IClienteService;
 import com.PruebaTecnica.ServicioAutomotor.models.Cliente;
+import com.PruebaTecnica.ServicioAutomotor.models.Vehiculo;
 import com.PruebaTecnica.ServicioAutomotor.repositories.IClienteRepository;
+import com.PruebaTecnica.ServicioAutomotor.repositories.IVehiculoRepository;
 
 @Service
 public class ClienteService implements IClienteService {
@@ -16,6 +18,8 @@ public class ClienteService implements IClienteService {
 	@Autowired
 	private IClienteRepository clienteRepository;
 	
+	@Autowired
+	private VehiculoService vehiculoService;
 	
 	@Override
 	public List<Cliente> listar() {
@@ -50,9 +54,16 @@ public class ClienteService implements IClienteService {
 	
 
 	@Override
-	public void delete(int idCliente) {
+	public void delete(int idCliente){
 		// TODO Auto-generated method stub
-		clienteRepository.deleteById(idCliente);
+		Cliente clienteBD = clienteRepository.findById(idCliente).get(); 
+		List<Vehiculo> vehiculosBD = vehiculoService.traerVehiculosByCliente(clienteBD); //OBTENGO TODOS LOS VEHICULOS DEL USUARIO INDICADO
+		if(vehiculosBD != null) { 
+			for (Vehiculo vehiculo : vehiculosBD) {
+				vehiculoService.delete(vehiculo.getIdVehiculo()); //ELIMINO CADA VEHICULO REGISTRADO AL CLIENTE
+			}
+		}	
+		clienteRepository.deleteById(idCliente); //UNA VEZ ELIMINADA LAS ORDENES DEL MISMO Y SUS VEHICULOS, ELIMINO AL CLIENTE
 	}
 	
 	

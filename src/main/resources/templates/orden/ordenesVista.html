@@ -81,7 +81,7 @@
 						<td th:text="${orden.total}" class="tabla__body-dato"></td>
                         <td class="tabla__body-dato">
                             <a th:href= "@{/orden/edit/}+ ${orden.idOrdenDeTrabajo}"class="tabla__boton-editar"><i class="fa-sharp fa-solid fa-pen-clip"></i></a>
-                            <a th:onclick="eliminar([[${orden.idOrdenDeTrabajo}]])" class="tabla__boton-eliminar" href="#"><i class="fa-sharp fa-solid fa-trash"></i></a> 
+                            <a th:onclick="eliminarOrden([[${orden.idOrdenDeTrabajo}]])" class="tabla__boton-eliminar" href="#"><i class="fa-sharp fa-solid fa-trash"></i></a> 
                        	</td>
 					</tr>
 				</tbody>
@@ -93,7 +93,7 @@
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
 					<label class="mr-sm-2" for="clienteSelect">Cliente:</label>
-					<select th:name="cliente" class="custom-select" id="clienteSelect">
+					<select th:name="cliente" class="custom-select" id="clienteSelect" required="true">
 						<option value=-1 disabled >--Seleccionar Cliente--</option>
 						<option th:each="c : ${clientesList}" th:value="${c.idCliente}" th:text="'DNI: ' + ${c.dni}+ ' ' + ${c.nombre}+ ' ' + ${c.apellido}"
 							class="form__select-option" />
@@ -108,7 +108,7 @@
 			<div class="form-row">
 				<div class="col-md-12 mb-3">
 					<label class="mr-sm-2" for="vehiculoSelect">Vehiculo:</label>
-					<select th:name="vehiculo" class="custom-select" id="clienteSelect">
+					<select th:name="vehiculo" class="custom-select" id="clienteSelect" required="true">
 						<option value=-1 disabled >--Seleccionar Vehiculo--</option>
 						<option th:each="v : ${vehiculoList}" th:value="${v.idVehiculo}" th:text="'Patente: '+ ${v.patente} + ' - ' +  ${v.marca.nombreMarca}+ ' - ' + ${v.modelo}"
 							class="form__select-option" />
@@ -132,6 +132,6 @@
 				
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script  th:src="@{/js/ordenFunciones.js}"></script></body>
+	<script  th:src="@{/js/funciones.js}"></script></body>
 
 </html>
