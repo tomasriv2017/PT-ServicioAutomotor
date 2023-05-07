@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Orden</title>
+    <link rel="icon" th:href="@{/img/logo.png}">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+    <!--JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+	<!--BOOTSTRAP 4-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">    
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+    
+     <!--FONT ICONS -->
+  	<script src="https://kit.fontawesome.com/6ad033bc94.js" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" th:href="@{/css/all.min.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/normalize.css}">
+    <link rel="stylesheet" th:href="@{/css/registerStyles.css}">
+
+</head>
+<body>
+        <!--ENCABEZADO-->
+        <header class="header">
+            <div class="header__contenedor">
+             <a class="header__logo"th:href="@{/}" >Prueba tecnica</a>
+         	
+            </div>
+        </header>
+
+        <main>
+            <h1 class="titulo">Ingrese la orden</h1>
+
+		<!--ACCIONES PARA SERVICIO-->
+		<button type="button" class="btn btn-success" data-toggle="modal"
+        		data-target="#modalBuscarServicio">Buscar Servicio</button>	
+              
+             <!--FORMULARIO DE ORDEN DE TRABAJO-->  
+            <form th:action="@{/orden/save}" th:object="${orden}" method="POST" class="form" id="form">
+	        
+                 <div class="form__grupo" id="grupo__fecha">
+                    <label for="permiso" class="form__label">Hora</label>
+                    <div class="form__grupo-input">
+                        <input th:field="${orden.fechaHora}"  type="datetime-local" class="form__input" required="true">
+                        <i class="fas fa-times-circle form__validacion-estado"></i>
+                    </div>
+                </div>
+               
+               	             
+				<!--ID-->
+				<div class="form-group" style="display: none;">
+					<p> <label>ID</label></p>
+					<p> <input th:field="${orden.idOrdenDeTrabajo}" type="text" class="form-control" /></p>
+				</div>
+               
+                <!--VEHICULO-->
+                <div class="form__grupo" id="grupo__vehiculo">
+                    <label for="documento" class="form__label">Eligir vehiculo con su propietario: </label>
+                    <div class="form__grupo-input">	
+	                    <select  th:field="${orden.vehiculo.idVehiculo}" required class="custom-select" >
+	                        <option value=-1 selected="selected" disabled >--Seleccionar Vehiculo--</option>
+	                        <option th:each="vehiculo:${vehiculoList}" th:value="${vehiculo.idVehiculo}" th:text="'Vehiculo: '+ ${vehiculo.marca.nombreMarca} + ' ' + ${vehiculo.modelo}+ ' - Propietario: ' + ${vehiculo.cliente.nombre} + ' ' + ${vehiculo.cliente.apellido}" class="form__select-option" />
+	                    </select>
+                    </div>
+                </div>
+   
+                <!--BUTTON-->
+                <div class="form__grupo form__grupo-button-enviar">
+                    <button th:if="${editMode == null}" class="form__button" type="submit">AGREGAR</button>
+                    <button th:if="${editMode == true}" class="form__button" type="submit">MODIFICAR</button>
+                </div>
+                
+                <p class="form__info" style="font-size: 1.15em;">
+                	<a th:href="@{/orden/cancel}">Cancelar</a> 
+                </p>
+            </form>
+            
+             <!--TABLA DE SERVICIOS - LAVADOS AGREGADOS A LA ORDEN-->
+        	<div class="card">
+        		<div class="card-body">
+        			<div class="table-responsive">
+        			 <h1>Servicios de Lavado</h1>
+        				<table class="table table-striped">
+	            			<thead class="thead-dark">
+		            			<tr>
+		            				<th scope="col">Descripcion del servicio</th>
+		            				<th scope="col">Tipo de Servicio </th>
+		            				<th scope="col">Precio</th>
+		            			</tr>
+	            			</thead>
+	            			<tbody>
+	            				<tr th:each="lavado : ${lavadoList}">
+	            					<td th:text="${lavado.descripcion}"></td>
+	            					<td th:text="${lavado.tipoServicio}"></td>
+	            					<td th:text="${lavado.precio}"></td>
+	            				</tr>
+	            			</tbody>
+        				</table>
+        	
+        			</div>
+        		</div>
+        	</div>
+            
+                        
+            <!--TABLA DE SERVICIOS - ACEITE Y FILTRO AGREGADOS A LA ORDEN-->
+        	<div class="card">
+        		<div class="card-body">
+        			<div class="table-responsive">
+        			<h1>Servicios de Filtro y Aceite</h1>
+        				<table class="table table-striped">
+	            			<thead class="thead-dark">
+		            			<tr>
+		            				<th scope="col">Descripcion del servicio</th>
+		            				<th scope="col">Tipo de Servicio </th>
+		            				<th scope="col">Precio</th>
+		            			</tr>
+	            			</thead>
+	            			<tbody>
+	            				<tr th:each="ayf : ${aceiteYFiltroList}">
+	            					<td th:text="${ayf.descripcion}"></td>
+	            					<td th:text="${ayf.tipoServicio}"></td>
+	            					<td th:text="${ayf.precio}"></td>>
+	            				</tr>
+	            			</tbody>
+        				</table>
+        	
+        			</div>
+        		</div>
+        	</div>
+            
+             <!--TABLA DE SERVICIOS - ALINEACION Y BALANCEO  AGREGADOS A LA ORDEN-->
+        	<div class="card">
+        		<div class="card-body">
+        			<div class="table-responsive">
+        			 <h1>Servicios de Alineacion y Balanceo</h1>
+        				<table class="table table-striped">
+	            			<thead class="thead-dark">
+		            			<tr>
+		            				<th scope="col">Descripcion del servicio</th>
+		            				<th scope="col">Tipo de Servicio </th>
+		            				<th scope="col">Precio</th>
+		            			</tr>
+	            			</thead>
+	            			<tbody>
+	            				<tr th:each="ayb : ${alineacionYBalanceoList}">
+	            					<td th:text="${ayb.descripcion}"></td>
+	            					<td th:text="${ayb.tieneCambioCubiertas} ? 'Con cambio de cubiertas' : 'Sin cambio de cubiertas'"></td>
+	            					<td th:text="${ayb.precio}"></td>
+	            				</tr>
+	            			</tbody>
+        				</table>
+        	
+        			</div>
+        		</div>
+        	</div>
+            
+            
+            <!--MODALS PARA SERVICIOS-->
+            <div class="modal fade" id="modalBuscarServicio" tabindex="-1" role="dialog"
+            	aria-labelledby="agregarServicioModal" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+					
+						<form id="formServicio" th:action="@{/orden/findService}" th:object="${servicioBuscado}" method="POST">
+               	             
+							<!--ID-->
+							<div class="form-group" style="display: none;">
+								<p> <label>ID</label></p>
+								<p> <input th:field="${orden.idOrdenDeTrabajo}" type="text" class="form-control" /></p>
+							</div>
+							
+							<div class="modal-header">
+								<h5 class="modal-title" id="agregarServicioModal">Buscar Servicio</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<label for="nombreLugar">Servicio</label>
+								<select th:field="${nuevoServicio.descripcion}" required class="custom-select" >
+                            		<option value=-1 selected="selected" disabled >--Elegir Servicio--</option>
+                            		<option th:each="s:${servicioList}" th:value="${s.descripcion}"  th:text="${s.descripcion}" class="form__select-option" />
+                        		</select>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+								<input type="submit" class="btn btn-primary" value="Buscar Servicio" />
+							</div>
+								
+						</form>
+						
+					</div>					
+				</div>
+            </div>
+            
+			<div class="alert-danger text-center" th:if="${errorMsg != null}" th:text="${errorMsg}"></div>
+                    
+        </main>
+    
+    
+        <!--FOOTER-->
+		<footer>
+			<div class="redes-sociales">
+				<a href="https://github.com/SebastianMMacario/Grupo-08-OO2-2021" target="_BLANK" class="redes-sociales__red"><i class="fa-brands fa-github-alt"></i> </a>
+			</div>
+		</footer>
+		
+	<!--SCRIPT-->
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script  th:src="@{/js/ordenFunciones.js}"></script></body>
+
+</body>
+</html>

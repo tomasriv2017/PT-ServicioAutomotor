@@ -28,8 +28,8 @@ public class Lavado  extends Servicio{
 	}//CONSTRUCTOR VACIO
 
 	
-	public Lavado(TipoServicio tipoServicio, double precio) {
-		super(precio);
+	public Lavado(String descripcion, double precio, TipoServicio tipoServicio) {
+		super(descripcion,precio);
 		this.tipoServicio = tipoServicio;
 	}
 
@@ -45,7 +45,11 @@ public class Lavado  extends Servicio{
 
 	@Override
 	public String toString() {
-		return "Lavado [tipoServicio=" + tipoServicio + "]";
+		 return descripcion;
+
 	}
+
+
+
 	
 }

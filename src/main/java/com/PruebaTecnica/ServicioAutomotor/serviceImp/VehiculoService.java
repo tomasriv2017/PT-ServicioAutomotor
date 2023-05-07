@@ -37,15 +37,15 @@ public class VehiculoService implements IVehiculoService {
 	}
 
 	@Override
-	public Optional<Vehiculo> traerVheiculoByMarca(Marca marca) {
+	public List<Vehiculo> traerVehiculosByMarca(Marca marca) {
 		// TODO Auto-generated method stub
-		return vehiculoRepository.findVehiculoByMarca(marca);
+		return vehiculoRepository.findAllByMarca(marca);
 	}
 
 	@Override
-	public Optional<Vehiculo> traerVheiculoByCliente(Cliente cliente) {
+	public List<Vehiculo> traerVehiculosByCliente(Cliente cliente) {
 		// TODO Auto-generated method stub
-		return vehiculoRepository.findVehiculoByCliente(cliente);
+		return vehiculoRepository.findAllByCliente(cliente);
 	}
 
 	@Override
@@ -83,5 +83,4 @@ public class VehiculoService implements IVehiculoService {
         }
 	}
 	
-
 }

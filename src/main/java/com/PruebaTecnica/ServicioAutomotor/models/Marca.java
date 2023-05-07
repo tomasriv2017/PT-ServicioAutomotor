@@ -26,8 +26,8 @@ public class Marca {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idMarca;
 	
-	@Column(name="marca", nullable=false, length=45)
-	private String marca;
+	@Column(name="nombre_marca", nullable=false, length=45)
+	private String nombreMarca;
 	
 	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, mappedBy="marca")
 	@JsonIgnore
@@ -46,10 +46,9 @@ public class Marca {
 	}//CONSTRUCTOR VACIO
 
 	
-	public Marca(String marca, Set<Vehiculo> vehiculos) {
+	public Marca(String nombreMarca) {
 		super();
-		this.marca = marca;
-//		this.vehiculos = vehiculos;
+		this.nombreMarca = nombreMarca;
 	}//CONSTRUCTOR
 
 
@@ -61,13 +60,17 @@ public class Marca {
 		this.idMarca = idMarca;
 	}
 
-	public String getMarca() {
-		return marca;
+	
+
+	public String getNombreMarca() {
+		return nombreMarca;
 	}
 
-	public void setMarca(String marca) {
-		this.marca = marca;
+
+	public void setNombreMarca(String nombreMarca) {
+		this.nombreMarca = nombreMarca;
 	}
+
 
 	public Set<Vehiculo> getVehiculos() {
 		return vehiculos;
@@ -95,7 +98,7 @@ public class Marca {
 
 	@Override
 	public String toString() {
-		return "Marca [idMarca=" + idMarca + ", marca=" + marca + ", createdat=" + createdat + ", updatedat="
+		return "Marca [idMarca=" + idMarca + ", nombreMarca=" + nombreMarca + ", createdat=" + createdat + ", updatedat="
 				+ updatedat + "]";
 	}
 	

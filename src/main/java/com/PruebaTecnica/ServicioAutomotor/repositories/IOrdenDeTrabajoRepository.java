@@ -15,5 +15,8 @@ public interface IOrdenDeTrabajoRepository extends JpaRepository<OrdenDeTrabajo,
 	
 	@Query("SELECT odt FROM OrdenDeTrabajo odt JOIN FETCH odt.vehiculo v WHERE v.cliente.idCliente = (:idCliente)")
 	public List<OrdenDeTrabajo> listOrdenDeTrabajoByCliente(@Param("idCliente") int idCliente);	
+	
+	@Query("SELECT odt FROM OrdenDeTrabajo odt  JOIN FETCH odt.vehiculo v WHERE v.idVehiculo = (:idVehiculo)")
+	public List<OrdenDeTrabajo> listOrdenDeTrabajoByVehiculo(@Param("idVehiculo") int idVehiculo);
 
 }

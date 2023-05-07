@@ -1,7 +1,8 @@
 package com.PruebaTecnica.ServicioAutomotor.models;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,18 +18,19 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "orden_de_trabajo")
 public class OrdenDeTrabajo {
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idOrdenDeTrabajo;
-	
-	@Column(name="fechaYHora",  nullable = false)
-	private LocalDateTime fechaYHora;
+
+	@DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm")
+    @Column(name="fecha_Hora",  nullable = false)
+    private Date fechaHora;
 	
 	@Column(name="total",  nullable = false)
 	private double total;
@@ -39,9 +41,8 @@ public class OrdenDeTrabajo {
 	
 	@ManyToMany
 	@JoinTable(name = "servicio_orden_trabajo",joinColumns = @JoinColumn(name="id_orden_de_trabajo"), inverseJoinColumns = @JoinColumn(name="id_servicio") )
-	private Set<Servicio> servicios;
-	
-	
+	private List<Servicio> servicios;
+		
 	@Column(name="createdat",  nullable = false)
 	@CreationTimestamp
 	private LocalDateTime createdat;	
@@ -50,10 +51,9 @@ public class OrdenDeTrabajo {
 	@UpdateTimestamp
 	private LocalDateTime updatedat;
 	
-	
-	public OrdenDeTrabajo(LocalDateTime fechaYHora, Vehiculo vehiculo, Set<Servicio> servicios) {
+	public OrdenDeTrabajo( Date fechaHora, Vehiculo vehiculo, List<Servicio> servicios) {
 		super();
-		this.fechaYHora = fechaYHora;
+		this.fechaHora = fechaHora;
 		this.vehiculo = vehiculo;
 		this.servicios = servicios;
 	}//CONSTRUCTOR
@@ -72,13 +72,17 @@ public class OrdenDeTrabajo {
 		this.idOrdenDeTrabajo = idOrdenDeTrabajo;
 	}
 
-	public LocalDateTime getFechaYHora() {
-		return fechaYHora;
+	
+	
+	public Date getFechaHora() {
+		return fechaHora;
 	}
 
-	public void setFechaYHora(LocalDateTime fechaYHora) {
-		this.fechaYHora = fechaYHora;
+
+	public void setFechaHora(Date fechaHora) {
+		this.fechaHora = fechaHora;
 	}
+
 
 	public double getTotal() {
 		return total;
@@ -112,21 +116,19 @@ public class OrdenDeTrabajo {
 		this.updatedat = updatedat;
 	}
 
-	public Set<Servicio> getServicios() {
+	public List<Servicio> getServicios() {
 		return servicios;
 	}
-	public void setServicios(Set<Servicio> servicios) {
+	public void setServicios(List<Servicio> servicios) {
 		this.servicios = servicios;
 	}
 
-
 	@Override
 	public String toString() {
-		return "OrdenDeTrabajo [idOrdenDeTrabajo=" + idOrdenDeTrabajo + ", fechaYHora=" + fechaYHora + ", total="
-				+ total + ", vehiculo=" + vehiculo + ", createdat=" + createdat + ", updatedat=" + updatedat + "]";
+		return "OrdenDeTrabajo [idOrdenDeTrabajo=" + idOrdenDeTrabajo + ", fechaHora=" + fechaHora + ", total=" + total
+				+ ", vehiculo=" + vehiculo + ", servicios=" + servicios + ", createdat=" + createdat + ", updatedat="
+				+ updatedat +  "]";
 	}
-
-	
 	
 	
 }

@@ -29,7 +29,7 @@ public class Vehiculo {
 	@Column(name="patente", nullable=false, length=7) //FORMATO 'AAA111' 6 CARACTERES O FORMATO 'AA111AA' 7 CARACTERES
 	private String patente;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_cliente",nullable=false)
 	private Cliente cliente;
 	

@@ -59,10 +59,15 @@
 	        <dependency>
 	            <groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-starter-validation</artifactId>
-	
 	        </dependency>
 	        
-	        
+	        <!-- Dependencia para que el servidor se actualice con los nuevos cambios sin tener que reniniciarlo-->
+	        <!--
+		    <dependency>
+		        <groupId>org.springframework.boot</groupId>
+		        <artifactId>spring-boot-devtools</artifactId>
+		    </dependency>
+	        -->
 	    </dependencies>
 
 	<build>

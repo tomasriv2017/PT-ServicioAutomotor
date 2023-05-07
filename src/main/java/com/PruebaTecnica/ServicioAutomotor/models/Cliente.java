@@ -26,6 +26,9 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idCliente;
 	
+	@Column(name="email", nullable=false)
+	private String email;
+	
 	@Column(name="dni", nullable=false)
 	private long dni;
 	
@@ -33,11 +36,14 @@ public class Cliente {
 	private String nombre;	
 
 	@Column(name="apellido", nullable=false, length=45)
-	private String apellido;
-
+	private String apellido;	
+	
 	@Column(name = "cant_servicios", columnDefinition = "int default 0")
 	private int cantServicios;
 
+	@Column(name="es_premium", columnDefinition = "boolean default false")
+	private boolean esPremium;
+	
 	@OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY, mappedBy="cliente")
 	@JsonIgnore
 	private Set<Vehiculo> vehiculos;
@@ -57,12 +63,12 @@ public class Cliente {
 	} //CONSTRUCTOR VACIO
 
 
-	public Cliente(long dni, String nombre, String apellido) {
+	public Cliente(long dni, String nombre, String apellido, String email) {
 		super();
 		this.dni = dni;
 		this.nombre = nombre;
 		this.apellido = apellido;
-//		this.vehiculos = vehiculos;
+		this.email = email;
 	}//CONSTRUCTOR
 
 
@@ -109,18 +115,32 @@ public class Cliente {
 		this.updatedat = updatedat;
 	}
 
-//	public Set<Vehiculo> getVehiculos() {
-//		return vehiculos;
-//	}
-//	public void setVehiculos(Set<Vehiculo> vehiculos) {
-//		this.vehiculos = vehiculos;
-//	}
+	public Set<Vehiculo> getVehiculos() {
+		return vehiculos;
+	}
+	public void setVehiculos(Set<Vehiculo> vehiculos) {
+		this.vehiculos = vehiculos;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public boolean isEsPremium() {
+		return esPremium;
+	}
+	public void setEsPremium(boolean esPremium) {
+		this.esPremium = esPremium;
+	}
 
 
 	@Override
 	public String toString() {
 		return "Cliente [idCliente=" + idCliente + ", dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido
-				+ ", cntServicios=" + cantServicios + ", createdat=" + createdat + ", updatedat="
+				+ ", email=" + email + ", cntServicios=" + cantServicios + ", createdat=" + createdat + ", updatedat="
 				+ updatedat + "]";
 	}
 	

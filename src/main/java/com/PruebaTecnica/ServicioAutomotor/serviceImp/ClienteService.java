@@ -58,15 +58,21 @@ public class ClienteService implements IClienteService {
 	
 	private void map(Cliente modificado, Cliente preModificado ){
 
+		if(modificado.getCantServicios() != 0) {
+			preModificado.setCantServicios(modificado.getCantServicios());
+		}
+		
         if(modificado.getApellido()!=null) {
             preModificado.setApellido(modificado.getApellido());
         }
         if (modificado.getNombre()!=null) {
             preModificado.setNombre(modificado.getNombre());
         }
+        if (modificado.getEmail() != null) {
+        	preModificado.setEmail(modificado.getEmail());
+        }
         if (modificado.getDni() != 0) {
             preModificado.setDni(modificado.getDni());
-
         }
 	}
 
