@@ -21,7 +21,7 @@ Dependencias utilizadas con Spring:
 * Mockito - JUnit: dependencias utilizadas para poder simular las pruebas unitarias
 
 ---
-Como inicializar el proyecto correctamente cargando los datos del script de sql correctamente
+Como inicializar el proyecto cargando los datos del script de sql correctamente
  * 1-Crear una base de datos llamada **pruebatecnica**
  * 2-Levantar el servidor con el IDE: Spring Tools Suite para que se creen las tablas en la base de datos
  * 3-Parar el servidor y setearle a la variable del aplication.properties **spring.sql.init.mode** el valor: **always**
