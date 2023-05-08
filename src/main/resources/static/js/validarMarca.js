@@ -4,14 +4,12 @@ const expresiones = {
 
 const campos = {
 	marca: false
-
 };
 
 const formulario = document.getElementById("form");
 const inputs = document.querySelectorAll("#form input");
 
 const validarFormulario = (evento)=>{
-
     switch(evento.target.name){
         case "marca":
             validarCampo(expresiones.marca , evento.target , "marca");
@@ -58,7 +56,7 @@ inputs.forEach( (input) =>{
 });
 
 
-if(inputs[2].value !== ""){
+if(inputs[1].value !== ""){
 	document.addEventListener("DOMContentLoaded", validarCamposAgregados );	
 }
 
@@ -74,5 +72,4 @@ formulario.addEventListener("submit", (e) =>{
             document.getElementById("form__msg-error").classList.remove("form__msg-erro-activo");
         } , 5000); //serian 5000 milisegundos es decir 5 segundos para que desaparezca el msg de exito
     }
-   
 });

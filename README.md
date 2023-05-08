@@ -1,7 +1,7 @@
 # Prueba tecnica: Servicio del automotor - Certant
 ***
 Este programa consiste en realizar la gestión de un negocio que se dedica a brindar servicios en una “boutique del automotor”
-**El servidor se implementara con la version 2.0.7 de Spring boot**
+**El servidor se implementara con la version 2.7.11 de Spring boot**
 ---
 Herramientas uitilizadas para el desarrollo del programa:
 * IDE: Eclipse - Spring tools suite
