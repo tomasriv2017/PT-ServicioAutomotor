@@ -1,5 +1,6 @@
 package com.PruebaTecnica.serviceImpTest;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -80,6 +81,8 @@ public class MarcaServiceTest {
 		Mockito.doNothing().when(marcaRepository).deleteById(1);
 		marcaService.delete(1);
 		Mockito.verify(marcaRepository).deleteById(1);	
+		assertDoesNotThrow(() -> marcaService.delete(1));
+
 	}
 	
 	

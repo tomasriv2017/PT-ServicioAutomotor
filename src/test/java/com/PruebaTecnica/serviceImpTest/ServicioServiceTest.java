@@ -1,10 +1,10 @@
 package com.PruebaTecnica.serviceImpTest;
 
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -96,18 +96,31 @@ public class ServicioServiceTest {
 	
 	@Test
 	public void guardarServiciosEncontradoEnListAuxTest() throws Exception {
-		servicioService.guardarServicioEncontradoEnListAux(hardcodearLavado().get());
-		servicioService.guardarServicioEncontradoEnListAux(hardcodearAceiteYFiltro().get());
+		assertDoesNotThrow(() -> servicioService.guardarServicioEncontradoEnListAux(hardcodearLavado().get()));
 	}
 	
 	@Test
+	public void guardarServiciosEncontradoEnListAuxExecpttionTest() {
+		String expectedMessage = "El servicio ya se encuentra agregado al turno";
+		try {
+			servicioService.guardarServicioEncontradoEnListAux(hardcodearServicio().get());
+			servicioService.guardarServicioEncontradoEnListAux(hardcodearServicio().get());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			String actualMessage = e.getMessage();
+			assertTrue(actualMessage.contains(expectedMessage));
+		}		
+	}
+	@Test
 	public void buscarTodosServicioDeListAuxTest() throws Exception {
-		servicioService.buscarTodosServicioDeListAux();
+		assertDoesNotThrow(() -> servicioService.buscarTodosServicioDeListAux());
+
 	}
 	
 	@Test
 	public void borrarTodosServiciosDeListAux() throws Exception {
-		servicioService.borrarTodosServiciosDeListAux();
+		assertDoesNotThrow(() -> servicioService.borrarTodosServiciosDeListAux());
+
 	}
 	
 	

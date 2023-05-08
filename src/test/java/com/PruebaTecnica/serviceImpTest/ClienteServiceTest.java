@@ -1,5 +1,6 @@
 package com.PruebaTecnica.serviceImpTest;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import java.time.LocalDateTime;
@@ -82,7 +83,7 @@ public class ClienteServiceTest {
 
 	
 	@Test
-	public void validateDeleteTest() {
+	public void deleteTest() {
 		Vehiculo vehiculo = new Vehiculo();
 		vehiculo.setIdVehiculo(1);
 		vehiculo.setCliente(hardcodearCliente().get());
@@ -96,36 +97,9 @@ public class ClienteServiceTest {
 
 		clienteService.delete(1);
 		Mockito.verify(clienteRepository).deleteById(1);	
+		assertDoesNotThrow(() -> clienteService.delete(1));
 	}
-	
-	
-//	@Test
-//	public void validateSaveTest() {
-//		Cliente clienteNuevo = new Cliente();
-//		clienteNuevo.setIdCliente(2);
-//		clienteNuevo.setApellido("Bondar");
-//		clienteNuevo.setNombre("Mario");
-//		clienteNuevo.setEmail("mario@mail.com");
-//		clienteNuevo.setDni(55555555);
-//		clienteNuevo.setCantServicios(5);
-//		clienteNuevo.setEsPremium(false);
-//		clienteNuevo.setVehiculos(new HashSet<Vehiculo>());
-//		clienteNuevo.setCreatedat(LocalDateTime.now());
-//		clienteNuevo.setUpdatedat(LocalDateTime.now());
-//	
-//		
-//		clienteService.saveOrUpdate(clienteNuevo);
-//		Mockito.verify(clienteRepository).save(clienteNuevo);
-//	}
-	
-//	@Test
-//	public void validateUpdateTest() {
-//		Mockito.when(clienteRepository.findById(1)).thenReturn(hardcodearCliente()); //SIMULA LA FUNCION DEL REPOSITORIO findById
-//		Cliente clienteNuevo = hardcodearCliente().get();
-//		clienteService.saveOrUpdate(clienteNuevo);
-//		Mockito.verify(clienteRepository).save(clienteNuevo);
-//	}
-	
+		
 	 @Test
 	 public void saveTest() {
 		Mockito.when(clienteRepository.save(Mockito.any())).thenReturn(hardcodearCliente().get());

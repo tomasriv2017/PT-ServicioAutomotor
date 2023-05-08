@@ -1,6 +1,9 @@
 package com.PruebaTecnica.serviceImpTest;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -98,6 +101,22 @@ public class OrdenDeTrabajoServiceTest {
 		assertEquals(hardcodearOrdenDeTabajo().get(), odtActual);
 	}
 
+	@Test
+	public void saveExceptionTest() {
+		OrdenDeTrabajo odtEsperada = new OrdenDeTrabajo();
+		odtEsperada.setIdOrdenDeTrabajo(3);
+		odtEsperada.setServicios(new ArrayList<Servicio>());
+	    String expectedMessage = "La orden debe tener cargada al menos un servicio";
+	    
+	    try {
+			ordenDeTrabajoService.saveOrUpdate(odtEsperada);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			String actualMessage = e.getMessage();
+			assertTrue(actualMessage.contains(expectedMessage));
+		}
+
+	}
 	@Test
 	public void updateTest() throws Exception {	
 	Mockito.when(ordenDeTrabajoRepository.findById(Mockito.anyInt())).thenReturn(hardcodearOrdenDeTabajo()); //SIMULA LA FUNCION DEL REPOSITORIO findById

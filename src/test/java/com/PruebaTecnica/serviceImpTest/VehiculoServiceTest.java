@@ -1,5 +1,6 @@
 package com.PruebaTecnica.serviceImpTest;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
@@ -110,7 +111,7 @@ public class VehiculoServiceTest {
 		Mockito.doNothing().when(ordenRepository).delete(Mockito.any());
 		vehiculoService.delete(1);
 		Mockito.doNothing().when(vehiculoRepository).deleteById(1);
-
+		assertDoesNotThrow(() -> vehiculoService.delete(1));
 	}
 	
 	
