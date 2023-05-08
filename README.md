@@ -22,7 +22,7 @@ Dependencias utilizadas con Spring:
 
 ---
 **Como inicializar el proyecto correctamente **
- 1.Crear una base de datos llamada **pruebatecnica**
- 2.Levantar el servidor con el IDE: Spring Tools Suite
- 3.Parar el servidor y setearle a la variable del aplication.properties **spring.sql.init.mode** el varlo: **always**
- 4.Volver a correr el servidor con el IDE
+ * 1-Crear una base de datos llamada **pruebatecnica**
+ * 2-Levantar el servidor con el IDE: Spring Tools Suite para que se creen las tablas en la base de datos
+ * 3-Parar el servidor y setearle a la variable del aplication.properties **spring.sql.init.mode** el valor: **always**
+ * 4-Volver a correr el servidor con el IDE
