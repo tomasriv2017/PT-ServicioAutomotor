@@ -144,25 +144,5 @@ public class OrdenDeTrabajo {
 		return idOrdenDeTrabajo == other.idOrdenDeTrabajo && Objects.equals(vehiculo, other.vehiculo);
 	}
 
-
-
-
-	
-
-
-
-	
-
-
-
-
-
-
-
-
-
-	
-	
-	
 	
 }

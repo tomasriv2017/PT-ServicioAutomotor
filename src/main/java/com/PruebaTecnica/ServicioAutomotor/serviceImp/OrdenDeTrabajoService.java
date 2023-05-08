@@ -59,7 +59,7 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
         Optional<OrdenDeTrabajo> ordenDeTrabajodb = ordenDeTrabajoRepository.findById(ordenDeTrabajo.getIdOrdenDeTrabajo());
         if( !ordenDeTrabajodb.isPresent() ) { 
         	ordenDeTrabajo.setServicios(getServicios(ordenDeTrabajo));
-        	ordenDeTrabajo.setTotal(calcularTotal(ordenDeTrabajo));
+        	ordenDeTrabajo.setTotal(calcularTotal(ordenDeTrabajo, true));
             return ordenDeTrabajoRepository.save(ordenDeTrabajo);
         }else {
             map(ordenDeTrabajo, ordenDeTrabajodb.get());
@@ -102,17 +102,19 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
         
         if( modificado.getServicios() != null) {
             preModificado.setServicios( getServicios(modificado));
-            preModificado.setTotal( calcularTotal(preModificado));
+            preModificado.setTotal( calcularTotal(preModificado, false));
         }
 	}
 	
-	private double calcularTotal (OrdenDeTrabajo ordenDeTrabajo) {
+	private double calcularTotal (OrdenDeTrabajo ordenDeTrabajo, boolean esNuevaOrden) {
 		double total = 0;
 		for (Servicio servicio : ordenDeTrabajo.getServicios()) {
 			total += servicio.getPrecio();
 		}
 		Cliente clienteDelVehiculo = vehiculoRepository.findById(ordenDeTrabajo.getVehiculo().getIdVehiculo()).get().getCliente();
-		clienteDelVehiculo.setCantServicios(clienteDelVehiculo.getCantServicios() + ordenDeTrabajo.getServicios().size());
+		
+		if(!esNuevaOrden) clienteDelVehiculo.setCantServicios(ordenDeTrabajo.getServicios().size());
+		else clienteDelVehiculo.setCantServicios(ordenDeTrabajo.getServicios().size() + clienteDelVehiculo.getCantServicios());
 		
 		if(clienteDelVehiculo.isEsPremium()) {
 			total -= total*0.15; //LE APLICO UN DESCUENTO DEL 15% AL TOTAL A PAGAR

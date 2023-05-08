@@ -3,7 +3,7 @@ package com.PruebaTecnica.ServicioAutomotor.helpers;
 public class ViewRouterHelpers {
 	/**** Views ****/
 	
-	//ACCESO
+	//ACCESO - LISTA DE CLIENTE
 	public final static String INDEX_VISTA =  "home/index.html";
 	
 	//CLIENTE
@@ -26,7 +26,7 @@ public class ViewRouterHelpers {
 	public final static String ORDEN_AGREGAR = "orden/agregarOrden.html";
 
 	
-	/**** Redirects ****/
+	/**** REDIRECTS ****/
 	public final static String INDEX_HOME_CLIENTE = "redirect:/";
 	public final static String INDEX_HOME_VEHICULO = "redirect:/car/";
 	public final static String INDEX_HOME_MARCA = "redirect:/marca/";

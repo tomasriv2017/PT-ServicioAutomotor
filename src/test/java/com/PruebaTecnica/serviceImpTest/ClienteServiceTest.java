@@ -95,8 +95,7 @@ public class ClienteServiceTest {
 		Mockito.doNothing().when(vehiculoService).delete(1);
 
 		clienteService.delete(1);
-		Mockito.verify(clienteRepository).deleteById(1);
-		
+		Mockito.verify(clienteRepository).deleteById(1);	
 	}
 	
 	
@@ -148,10 +147,7 @@ public class ClienteServiceTest {
 
 	
 	
-	
-	
 	private static Optional<Cliente> hardcodearCliente() {
-		
 		Optional<Cliente> clientePrueba = Optional.of(new Cliente()) ;
 		clientePrueba.get().setIdCliente(1);
 		clientePrueba.get().setApellido("Rivera");
@@ -163,7 +159,6 @@ public class ClienteServiceTest {
 		clientePrueba.get().setVehiculos(new HashSet<Vehiculo>());
 		clientePrueba.get().setCreatedat(LocalDateTime.now());
 		clientePrueba.get().setUpdatedat(LocalDateTime.now());
-		
 		return clientePrueba;
 	}
 	
