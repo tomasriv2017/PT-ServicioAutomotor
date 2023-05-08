@@ -19,3 +19,10 @@ Dependencias utilizadas con Spring:
 * Mysql connector - java: dependencia encargada de realizar la conexion de Java con el motor de base de datos MySQL
 * Thymeleaf: motor de plantillas uitlizado para trabajar con la capa de vistas HTML del MVC 
 * Mockito - JUnit: dependencias utilizadas para poder simular las pruebas unitarias
+
+---
+**Como inicializar el proyecto correctamente **
+ 1.Crear una base de datos llamada **pruebatecnica**
+ 2.Levantar el servidor con el IDE: Spring Tools Suite
+ 3.Parar el servidor y setearle a la variable del aplication.properties **spring.sql.init.mode** el varlo: **always**
+ 4.Volver a correr el servidor con el IDE
