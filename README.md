@@ -1,31 +1,20 @@
-# Read Me First
-The following was discovered as part of building this project:
+# Prueba tecnica: Servicio del automotor - Certant
+***
+Este programa consiste en realizar la gestión de un negocio que se dedica a brindar servicios en una “boutique del automotor”
+**El servidor se implementara con la version 2.0.7 de Spring boot**
+---
+Herramientas uitilizadas para el desarrollo del programa:
+* IDE: Eclipse - Spring tools suite
+* Intefaces creadas con: HTML5, CSS, BOOTSTRAP5, JQUERY Y JAVASCRIPT VANILLA
+* Patron de diseño: MVC (Model-View-Controller)
+* Framework para el backend: Spring boot (Java)
+* Base de datos SQL: Mysql
+* Controlador de versiones: Git - Utilizado con la interfaz Sourcetree
 
-* The JVM level was changed from '1.8' to '17', review the [JDK Version Range](https://github.com/spring-projects/spring-framework/wiki/Spring-Framework-Versions#jdk-version-range) on the wiki for more details.
-
-# Getting Started
-
-### Reference Documentation
-For further reference, please consider the following sections:
-
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/3.0.6/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/3.0.6/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/3.0.6/reference/htmlsingle/#web)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/3.0.6/reference/htmlsingle/#data.sql.jpa-and-spring-data)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/3.0.6/reference/htmlsingle/#web.security)
-* [Thymeleaf](https://docs.spring.io/spring-boot/docs/3.0.6/reference/htmlsingle/#web.servlet.spring-mvc.template-engines)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/rest/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
-* [Handling Form Submission](https://spring.io/guides/gs/handling-form-submission/)
-
+---
+Dependencias utilizadas con Spring:
+* Spring web: crea el servidor de la plataforma
+* Spring JPA: ORM (Object Relational Mapping) que se encarga de realizar los mapeos de las clases de Java con las entidades de la base de datos
+* Mysql connector - java: dependencia encargada de realizar la conexion de Java con el motor de base de datos MySQL
+* Thymeleaf: motor de plantillas uitlizado para trabajar con la capa de vistas HTML del MVC 
+* Mockito - JUnit: dependencias utilizadas para poder simular las pruebas unitarias
