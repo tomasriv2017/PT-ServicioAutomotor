@@ -10,7 +10,6 @@ import com.PruebaTecnica.ServicioAutomotor.interfaceService.IClienteService;
 import com.PruebaTecnica.ServicioAutomotor.models.Cliente;
 import com.PruebaTecnica.ServicioAutomotor.models.Vehiculo;
 import com.PruebaTecnica.ServicioAutomotor.repositories.IClienteRepository;
-import com.PruebaTecnica.ServicioAutomotor.repositories.IVehiculoRepository;
 
 @Service
 public class ClienteService implements IClienteService {
@@ -44,6 +43,7 @@ public class ClienteService implements IClienteService {
 		// TODO Auto-generated method stub
 	
 	        Optional<Cliente> clientedb = clienteRepository.findById(cliente.getIdCliente());
+	      
 	        if( !clientedb.isPresent() ) {
 	            return clienteRepository.save(cliente);
 	        }else {
