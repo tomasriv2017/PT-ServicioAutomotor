@@ -1,9 +1,6 @@
 package com.PruebaTecnica.serviceImpTest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -120,8 +117,6 @@ public class OrdenDeTrabajoServiceTest {
 		ordenDeTrabajoService.delete(1);
 		Mockito.verify(ordenDeTrabajoRepository).deleteById(1);	
 	}
-	
-	
 	
 	
 	
