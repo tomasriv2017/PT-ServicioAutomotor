@@ -137,7 +137,7 @@ public class Cliente {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(idCliente);
+		return Objects.hash(dni, idCliente);
 	}
 
 	@Override
@@ -149,9 +149,11 @@ public class Cliente {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		return idCliente == other.idCliente;
+		return dni == other.dni && idCliente == other.idCliente;
 	}
 
+	
+	
 
 	
 	

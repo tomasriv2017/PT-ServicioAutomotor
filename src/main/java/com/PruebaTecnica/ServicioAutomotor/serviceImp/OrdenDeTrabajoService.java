@@ -53,7 +53,6 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	@Override
 	public OrdenDeTrabajo saveOrUpdate(OrdenDeTrabajo ordenDeTrabajo) throws Exception{
 		// TODO Auto-generated method stub
-		System.out.println(ordenDeTrabajo);
 		if(ordenDeTrabajo.getServicios().isEmpty() == true) { 
 			throw new Exception("La orden debe tener cargada al menos un servicio");
 		}
@@ -96,11 +95,6 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
         if( modificado.getFechaHora() != null) {
             preModificado.setFechaHora(modificado.getFechaHora());
         }
-        
-        if( modificado.getFechaHora() != null) {
-            preModificado.setFechaHora(modificado.getFechaHora());
-        }
-        
         
         if( modificado.getVehiculo() != null) {
             preModificado.setVehiculo( modificado.getVehiculo());

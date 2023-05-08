@@ -82,7 +82,7 @@ public class ClienteServiceTest {
 
 	
 	@Test
-	public void deleteTest() {
+	public void validateDeleteTest() {
 		Vehiculo vehiculo = new Vehiculo();
 		vehiculo.setIdVehiculo(1);
 		vehiculo.setCliente(hardcodearCliente().get());
@@ -100,35 +100,54 @@ public class ClienteServiceTest {
 	}
 	
 	
-	@Test
-	public void saveTest() {
-		Cliente clienteNuevo = new Cliente();
-		clienteNuevo.setIdCliente(2);
-		clienteNuevo.setApellido("Bondar");
-		clienteNuevo.setNombre("Mario");
-		clienteNuevo.setEmail("mario@mail.com");
-		clienteNuevo.setDni(55555555);
-		clienteNuevo.setCantServicios(5);
-		clienteNuevo.setEsPremium(false);
-		clienteNuevo.setVehiculos(new HashSet<Vehiculo>());
-		clienteNuevo.setCreatedat(LocalDateTime.now());
-		clienteNuevo.setUpdatedat(LocalDateTime.now());
+//	@Test
+//	public void validateSaveTest() {
+//		Cliente clienteNuevo = new Cliente();
+//		clienteNuevo.setIdCliente(2);
+//		clienteNuevo.setApellido("Bondar");
+//		clienteNuevo.setNombre("Mario");
+//		clienteNuevo.setEmail("mario@mail.com");
+//		clienteNuevo.setDni(55555555);
+//		clienteNuevo.setCantServicios(5);
+//		clienteNuevo.setEsPremium(false);
+//		clienteNuevo.setVehiculos(new HashSet<Vehiculo>());
+//		clienteNuevo.setCreatedat(LocalDateTime.now());
+//		clienteNuevo.setUpdatedat(LocalDateTime.now());
+//	
+//		
+//		clienteService.saveOrUpdate(clienteNuevo);
+//		Mockito.verify(clienteRepository).save(clienteNuevo);
+//	}
 	
-		
-		clienteService.saveOrUpdate(clienteNuevo);
-		Mockito.verify(clienteRepository).save(clienteNuevo);
-	}
+//	@Test
+//	public void validateUpdateTest() {
+//		Mockito.when(clienteRepository.findById(1)).thenReturn(hardcodearCliente()); //SIMULA LA FUNCION DEL REPOSITORIO findById
+//		Cliente clienteNuevo = hardcodearCliente().get();
+//		clienteService.saveOrUpdate(clienteNuevo);
+//		Mockito.verify(clienteRepository).save(clienteNuevo);
+//	}
 	
-	@Test
-	public void updateTest() {
-		Mockito.when(clienteRepository.findById(1)).thenReturn(hardcodearCliente()); //SIMULA LA FUNCION DEL REPOSITORIO findById
-		Cliente clienteNuevo = hardcodearCliente().get();
-	
-		clienteService.saveOrUpdate(clienteNuevo);
-		
-		Mockito.verify(clienteRepository).save(clienteNuevo);
-	}
+	 @Test
+	 public void saveTest() {
+		Mockito.when(clienteRepository.save(Mockito.any())).thenReturn(hardcodearCliente().get());
+		Cliente clienteActual = clienteService.saveOrUpdate(hardcodearCliente().get());
 
+		assertEquals(hardcodearCliente().get(), clienteActual );
+		
+	 }
+	
+	 @Test
+	 public void updateTest() {
+		Mockito.when(clienteRepository.findById(1)).thenReturn(hardcodearCliente());
+		Mockito.when(clienteRepository.save(Mockito.any())).thenReturn(hardcodearCliente().get());
+		Cliente clienteActual = clienteService.saveOrUpdate(hardcodearCliente().get());
+		
+		assertEquals(hardcodearCliente().get(), clienteActual );
+		
+	 }
+
+	
+	
 	
 	
 	private static Optional<Cliente> hardcodearCliente() {
