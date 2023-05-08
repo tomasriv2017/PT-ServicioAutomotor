@@ -1,6 +1,7 @@
 package com.PruebaTecnica.ServicioAutomotor.models;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -115,6 +116,23 @@ public class Servicio {
 	public String toString() {
 		return "Servicio [idServicio=" + idServicio + ", descripcion= "+ descripcion+ ", createdat=" + createdat + ", updatedat=" + updatedat
 				+ ", precio=" + precio + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(descripcion, idServicio);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Servicio other = (Servicio) obj;
+		return Objects.equals(descripcion, other.descripcion) && idServicio == other.idServicio;
 	}
 	
 	

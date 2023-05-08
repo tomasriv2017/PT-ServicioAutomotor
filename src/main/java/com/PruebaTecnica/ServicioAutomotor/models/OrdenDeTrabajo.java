@@ -3,6 +3,7 @@ package com.PruebaTecnica.ServicioAutomotor.models;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -114,6 +115,8 @@ public class OrdenDeTrabajo {
 	public void setServicios(List<Servicio> servicios) {
 		this.servicios = servicios;
 	}
+	
+
 
 	@Override
 	public String toString() {
@@ -121,6 +124,25 @@ public class OrdenDeTrabajo {
 				+ ", vehiculo=" + vehiculo + ", servicios=" + servicios + ", createdat=" + createdat + ", updatedat="
 				+ updatedat +  "]";
 	}
-	
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idOrdenDeTrabajo, vehiculo);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OrdenDeTrabajo other = (OrdenDeTrabajo) obj;
+		return idOrdenDeTrabajo == other.idOrdenDeTrabajo && Objects.equals(vehiculo, other.vehiculo);
+	}
+
 	
 }

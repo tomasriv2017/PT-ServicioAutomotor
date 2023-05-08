@@ -1,6 +1,7 @@
 package com.PruebaTecnica.ServicioAutomotor.models;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -119,5 +120,28 @@ public class Vehiculo {
 				+ marca + ", modelo=" + modelo +  ", createdat=" + createdat + ", updatedat=" + updatedat + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(cliente, idVehiculo, patente);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vehiculo other = (Vehiculo) obj;
+		return Objects.equals(cliente, other.cliente) && idVehiculo == other.idVehiculo
+				&& Objects.equals(patente, other.patente);
+	}
+
+
+	
+	
+	
+	
 		
 }

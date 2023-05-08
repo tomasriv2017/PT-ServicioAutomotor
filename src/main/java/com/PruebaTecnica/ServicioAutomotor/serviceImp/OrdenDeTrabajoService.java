@@ -53,14 +53,13 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
 	@Override
 	public OrdenDeTrabajo saveOrUpdate(OrdenDeTrabajo ordenDeTrabajo) throws Exception{
 		// TODO Auto-generated method stub
-		System.out.println(ordenDeTrabajo);
 		if(ordenDeTrabajo.getServicios().isEmpty() == true) { 
 			throw new Exception("La orden debe tener cargada al menos un servicio");
 		}
         Optional<OrdenDeTrabajo> ordenDeTrabajodb = ordenDeTrabajoRepository.findById(ordenDeTrabajo.getIdOrdenDeTrabajo());
         if( !ordenDeTrabajodb.isPresent() ) { 
         	ordenDeTrabajo.setServicios(getServicios(ordenDeTrabajo));
-        	ordenDeTrabajo.setTotal(calcularTotal(ordenDeTrabajo));
+        	ordenDeTrabajo.setTotal(calcularTotal(ordenDeTrabajo, true));
             return ordenDeTrabajoRepository.save(ordenDeTrabajo);
         }else {
             map(ordenDeTrabajo, ordenDeTrabajodb.get());
@@ -97,28 +96,25 @@ public class OrdenDeTrabajoService implements IOrdenDeTrabajoService {
             preModificado.setFechaHora(modificado.getFechaHora());
         }
         
-        if( modificado.getFechaHora() != null) {
-            preModificado.setFechaHora(modificado.getFechaHora());
-        }
-        
-        
         if( modificado.getVehiculo() != null) {
             preModificado.setVehiculo( modificado.getVehiculo());
         }
         
         if( modificado.getServicios() != null) {
             preModificado.setServicios( getServicios(modificado));
-            preModificado.setTotal( calcularTotal(preModificado));
+            preModificado.setTotal( calcularTotal(preModificado, false));
         }
 	}
 	
-	private double calcularTotal (OrdenDeTrabajo ordenDeTrabajo) {
+	private double calcularTotal (OrdenDeTrabajo ordenDeTrabajo, boolean esNuevaOrden) {
 		double total = 0;
 		for (Servicio servicio : ordenDeTrabajo.getServicios()) {
 			total += servicio.getPrecio();
 		}
 		Cliente clienteDelVehiculo = vehiculoRepository.findById(ordenDeTrabajo.getVehiculo().getIdVehiculo()).get().getCliente();
-		clienteDelVehiculo.setCantServicios(clienteDelVehiculo.getCantServicios() + ordenDeTrabajo.getServicios().size());
+		
+		if(!esNuevaOrden) clienteDelVehiculo.setCantServicios(ordenDeTrabajo.getServicios().size());
+		else clienteDelVehiculo.setCantServicios(ordenDeTrabajo.getServicios().size() + clienteDelVehiculo.getCantServicios());
 		
 		if(clienteDelVehiculo.isEsPremium()) {
 			total -= total*0.15; //LE APLICO UN DESCUENTO DEL 15% AL TOTAL A PAGAR

@@ -1,6 +1,7 @@
 package com.PruebaTecnica.ServicioAutomotor.models;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -95,5 +96,26 @@ public class Marca {
 		return "Marca [idMarca=" + idMarca + ", nombreMarca=" + nombreMarca + ", createdat=" + createdat + ", updatedat="
 				+ updatedat + "]";
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idMarca, nombreMarca);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Marca other = (Marca) obj;
+		return idMarca == other.idMarca && Objects.equals(nombreMarca, other.nombreMarca);
+	}
+	
+	
 	
 }

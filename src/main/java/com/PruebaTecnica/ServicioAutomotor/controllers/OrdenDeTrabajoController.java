@@ -1,7 +1,7 @@
 package com.PruebaTecnica.ServicioAutomotor.controllers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashMap;import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -141,6 +141,13 @@ public class OrdenDeTrabajoController {
 			@Validated @ModelAttribute("orden") OrdenDeTrabajo orden,
 			Model model) {
 		
+		Optional<OrdenDeTrabajo> ordenEnBD = ordenDeTrabajoService.traerById(orden.getIdOrdenDeTrabajo());
+		if(ordenEnBD.isPresent()) { //DETERMINO SI LA ORDEN YA ESTA CREADA, EN EL CASO DE YA EXISTIR ES UNA MODIFICACION
+			model.addAttribute("orden", ordenEnBD.get()); 
+			model.addAttribute("editMode", true);
+		}
+		else  model.addAttribute("orden", orden);
+		
 		try {			
 			Servicio servicioBuscado = servicioService.buscarServicioPorDescripcion(servicio.getDescripcion());
 			servicioService.guardarServicioEncontradoEnListAux(servicioBuscado);
@@ -153,13 +160,6 @@ public class OrdenDeTrabajoController {
 		List<AceiteYFiltro> ayfLista = new ArrayList<>();
 		List<AlineacionYBalanceo> aybLista = new ArrayList<>();
 		getServiciosByTipo(serviciosAgregados,lavadoLista, ayfLista, aybLista); 
-	
-		Optional<OrdenDeTrabajo> ordenEnBD = ordenDeTrabajoService.traerById(orden.getIdOrdenDeTrabajo());
-		if(ordenEnBD.isPresent()) { //DETERMINO SI LA ORDEN YA ESTA CREADA, EN EL CASO DE YA EXISTIR ES UNA MODIFICACION
-			model.addAttribute("orden", ordenEnBD.get()); 
-			model.addAttribute("editMode", true);
-		}
-		else  model.addAttribute("orden", orden);
 		
 		model.addAttribute("servicioList", getServiciosNoAgregados(serviciosAgregados));
 		model.addAttribute("vehiculoList", vehiculoService.listar());
